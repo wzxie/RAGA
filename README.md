@@ -45,8 +45,8 @@ For documentation and information on how to cite ONTbyAHR, please visit the ONTb
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
-Zhao rupeng:   2247290650@qq.com
-Qian yongqing: 2660564449@qq.com
-Zhou zuwen:    784012725@qq.com
-Luo yuhong:    1785045785@qq.com
-Xie wenzhao:   xwz080311@163.com
+*Zhao rupeng:   2247290650@qq.com
+*Qian yongqing: 2660564449@qq.com
+*Zhou zuwen:    784012725@qq.com
+*Luo yuhong:    1785045785@qq.com
+*Xie wenzhao:   xwz080311@163.com
