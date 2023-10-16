@@ -2,8 +2,9 @@
 Generate putative ONT reads with the help of query\`s assemblies, query\`s PacBio HiFi reads and reference genome.
 
 ## Overview
-purge_dups is designed to remove haplotigs and contig overlaps in a de novo assembly based on read depth.
-You can follow the Usage part and use our pipeline to purge your assembly or go to the Pipeline Guide to build your own pipeline.
+ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
+![image](https://github.com/wzxie/ONTbyAHR/assets/42645873/524c6b5e-7373-493a-b6ab-325785a5ff99)
+![66f7079853b07c21475ab242bb889b4](https://github.com/wzxie/ONTbyAHR/assets/42645873/9a56b41c-6d5b-462a-b521-c45594b0a764)
 
 ## Dependencies
 1. minimap2
