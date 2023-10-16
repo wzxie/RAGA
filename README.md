@@ -22,6 +22,7 @@ Run the following commands to intall purge_dups (required):
 ```
 
 # Usage
+```
 echo "Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [-o output directory] [-t number of threads] [-n number of polishing rounds]
 Options:
     Input/Output:
@@ -35,7 +36,7 @@ Options:
     	-t INT		number of threads [1]
     	-version	show version number
 See more information at https://github.com/wzxie/ONTbyAHR.git
-
+```
 
 
 
