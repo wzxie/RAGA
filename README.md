@@ -39,17 +39,17 @@ Options:
 
 ## Inputs and Outputs
 ### Input files
-The reference genome sequence files
+The reference genome sequence file
 ```
 >Chr01
 ATCGATCGATCGATCGATCGATCG...
 ```
-The query genome sequence files
+The query genome sequence file
 ```
 >Contig1
 ATCGATCGATCGATCGATCGATCG...
 ```
-The query PacBio HiFi sequence files
+The query PacBio HiFi sequence file
 ```
 @*/ccs
 ATCGATCGATCGATCGATCGATCG...
