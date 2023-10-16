@@ -21,7 +21,7 @@ Run the following commands to intall purge_dups (required):
 2. export PATH=/path/to/ONTbyAHR/bin/:$PATH
 ```
 
-# Usage
+## Usage
 ```
 echo "Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [-o output directory] [-t number of threads] [-n number of polishing rounds]
 Options:
@@ -38,12 +38,15 @@ Options:
 See more information at https://github.com/wzxie/ONTbyAHR.git
 ```
 
+## Outputs
 For documentation and information on how to cite ONTbyAHR, please visit the ONTbyAHR Homepage.
 
+## Example
 
-
-
-
-
-
-
+## Contact
+We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
+Zhao rupeng:   2247290650@qq.com
+Qian yongqing: 2660564449@qq.com
+Zhou zuwen:    784012725@qq.com
+Luo yuhong:    1785045785@qq.com
+Xie wenzhao:   xwz080311@163.com
