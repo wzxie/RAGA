@@ -3,17 +3,16 @@ Generate putative ONT reads with the help of query\`s assemblies, query\`s PacBi
 
 ## Overview
 ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
-![image](https://github.com/wzxie/ONTbyAHR/assets/42645873/524c6b5e-7373-493a-b6ab-325785a5ff99)
-![66f7079853b07c21475ab242bb889b4](https://github.com/wzxie/ONTbyAHR/assets/42645873/9a56b41c-6d5b-462a-b521-c45594b0a764)
+![test](https://github.com/wzxie/ONTbyAHR/assets/42645873/412f6cf6-b312-4b8c-9877-758e204f4996)
 
 ## Dependencies
-1. minimap2
-2. racon
-3. ragtag.py
-4. nucmer
-7. awk
-8. hifiasm
-9. samtools 
+1. minimap2 (2.22-r1101)
+2. racon (v1.4.20)
+3. ragtag.py (v2.1.0)
+4. nucmer (4.0.0rc1)
+7. awk (GNU Awk 4.0.2)
+8. hifiasm (0.19.4-r575)
+9. samtools (Version: 1.11)
 
 ## Installation
 Run the following commands to intall purge_dups (required):
