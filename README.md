@@ -17,8 +17,8 @@ ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembl
 ## Installation
 Run the following commands to intall purge_dups (required):
 ```
-1. wget http://cbi.hzau.edu.cn/ppsPCP/files/ppsPCP.zip or git clone https://github.com/wzxie/ONTbyAHR.git
-2. export PATH=/path/to/ppsPCP/bin/:$PATH
+1. wget http://cbi.gxu.edu.cn/ONTbyAHR/files/ONTbyAHR.zip or git clone https://github.com/wzxie/ONTbyAHR.git
+2. export PATH=/path/to/ONTbyAHR/bin/:$PATH
 ```
 
 # Usage
@@ -34,4 +34,15 @@ Options:
     Supp:
     	-t INT		number of threads [1]
     	-version	show version number
-See more information at https://github.com/***.\n
+See more information at https://github.com/wzxie/ONTbyAHR.git
+
+
+
+
+
+
+
+
+
+
+
