@@ -26,27 +26,49 @@ Run the following commands to intall purge_dups (required):
 echo "Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [-o output directory] [-t number of threads] [-n number of polishing rounds]
 Options:
     Input/Output:
-    	-r		reference genome
-    	-q		query genome
-    	-c		ccs reads
-    	-o		output directory
+    	-r		    reference genome
+    	-q		    query genome
+    	-c		    ccs reads
+    	-o		    output directory
     Polish:
     	-n INT		Number of Polishing Rounds [1-5]
     Supp:
     	-t INT		number of threads [1]
     	-version	show version number
-See more information at https://github.com/wzxie/ONTbyAHR.git
 ```
 
-## Outputs
-For documentation and information on how to cite ONTbyAHR, please visit the ONTbyAHR Homepage.
+## Inputs and Outputs
+### Input files
+The reference genome sequence files
+```
+>Chr01
+ATCGATCGATCGATCGATCGATCG...
+```
+The query genome sequence files
+```
+>Contig1
+ATCGATCGATCGATCGATCGATCG...
+```
+The query PacBio HiFi sequence files
+```
+@m64164_201113_025413/178653497/ccs
+ATCGATCGATCGATCGATCGATCG...
++
+~{m~pI~~e~P~c~~o~[o~q_~~...
+@m64164_201113_025413/178653498/ccs
+ATCGATCGATCGATCGATCGATCG...
++
+=<G~~n~~~~V~~~~~~~}~~~~~...
+```
+### Output files
+* The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
+* The 'ontAlt_qry.fa' contains the final synthetic ONT reads used to aid in subsequent assembly.
+* The 'ontAlt_qry.svg' provides a simple statistics of the 'ontAlt_qry.fa'.
 
 ## Example
+```
+```
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
 * Zhao rupeng:   2247290650@qq.com
-* Qian yongqing: 2660564449@qq.com
-* Zhou zuwen:    784012725@qq.com
-* Luo yuhong:    1785045785@qq.com
-* Xie wenzhao:   xwz080311@163.com
