@@ -38,7 +38,7 @@ Options:
 See more information at https://github.com/wzxie/ONTbyAHR.git
 ```
 
-
+For documentation and information on how to cite ONTbyAHR, please visit the ONTbyAHR Homepage.
 
 
 
