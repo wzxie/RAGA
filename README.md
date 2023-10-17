@@ -23,18 +23,28 @@ Run the following commands to intall purge_dups (required):
 
 ## Usage
 ```
-echo "Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [-o output directory] [-t number of threads] [-n number of polishing rounds]
+Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
 Options:
     Input/Output:
-    	-r            reference genome
-    	-q            query genome
-    	-c            ccs reads
-    	-o            output directory
+    -r          reference genome
+    -q          query genome
+    -c          ccs reads
+    -o          output directory
+
     Polish:
-    	-n INT        Number of Polishing Rounds [1-5]
+    -n INT      Number of Polishing Rounds [1-5], default 3
+
+    Filter:
+    -i FLOAT    Set the minimum alignment identity [0, 100], default 0
+    -l INT      Set the minimum alignment length, default 0
+    -p FLOAT    Extract the PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+    -P FLOAT    Extract the query ontAlt read which align length is >= *% of its own length [0-1), default 0.5
+
     Supp:
-    	-t INT        number of threads [1]
-    	-version      show version number
+    -t INT      number of threads, default 1
+    -version    show version number
+
+See more information at https://github.com/wzxie/ONTbyAHR.
 ```
 
 ## Inputs and Outputs
