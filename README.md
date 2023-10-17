@@ -31,10 +31,10 @@ Options:
     	-c            ccs reads
     	-o            output directory
     Polish:
-    	-n INT		  Number of Polishing Rounds [1-5]
+    	-n INT        Number of Polishing Rounds [1-5]
     Supp:
-    	-t INT		  number of threads [1]
-    	-version	  show version number
+    	-t INT        number of threads [1]
+    	-version      show version number
 ```
 
 ## Inputs and Outputs
