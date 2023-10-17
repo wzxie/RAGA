@@ -26,15 +26,15 @@ Run the following commands to intall purge_dups (required):
 echo "Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [-o output directory] [-t number of threads] [-n number of polishing rounds]
 Options:
     Input/Output:
-    	-r        reference genome
-    	-q        query genome
-    	-c        ccs reads
-    	-o        output directory
+    	-r            reference genome
+    	-q            query genome
+    	-c            ccs reads
+    	-o            output directory
     Polish:
-    	-n INT		Number of Polishing Rounds [1-5]
+    	-n INT		  Number of Polishing Rounds [1-5]
     Supp:
-    	-t INT		number of threads [1]
-    	-version	show version number
+    	-t INT		  number of threads [1]
+    	-version	  show version number
 ```
 
 ## Inputs and Outputs
