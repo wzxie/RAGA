@@ -3,7 +3,7 @@ Generate putative ONT reads with the help of query\`s assemblies, query\`s PacBi
 
 ## Overview
 ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
-![示意图](https://github.com/wzxie/ONTbyAHR/assets/42645873/d9d492c3-2394-42cc-9465-e134a18139b2)
+![示意图](https://github.com/wzxie/RAGA/blob/main/%E4%B8%BB%E5%9B%BE1-RGA-20231223.pdf)
 
 ## Dependencies
 1. minimap2 (2.22-r1101)
