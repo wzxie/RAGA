@@ -1,8 +1,8 @@
 # RAGA
-Generate putative ONT reads with the help of query\`s assemblies, query\`s PacBio HiFi reads and reference genome.
+Generate putative long reads with the help of query\`s assemblies, query\`s PacBio HiFi reads and reference genome.
 
 ## Overview
-ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
+RAGA is capable of producing fake long reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
 ![示意图](https://github.com/wzxie/RAGA/blob/main/20231226%20%E5%8E%9F%E7%90%86%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
 
 ## Dependencies
@@ -17,13 +17,13 @@ ONTbyAHR is capable of producing fake ONT reads by utilizing the query's assembl
 ## Installation
 Run the following commands to intall purge_dups (required):
 ```
-1. wget http://cbi.gxu.edu.cn/ONTbyAHR/files/ONTbyAHR.zip or git clone https://github.com/wzxie/ONTbyAHR.git
-2. export PATH=/path/to/ONTbyAHR/bin/:$PATH
+1. git clone https://github.com/wzxie/RAGA.git
+2. export PATH=/path/to/RAGA/bin/:$PATH
 ```
 
 ## Usage
 ```
-Usage: l3-4.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
+Usage: l3-8.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
 Options:
     Input/Output:
     -r          reference genome
@@ -32,19 +32,20 @@ Options:
     -o          output directory
 
     Polish:
-    -n INT      Number of Polishing Rounds [1-5], default 3
+    -n INT      Number of Polishing Rounds [>=3], default 3
 
     Filter:
-    -i FLOAT    Set the minimum alignment identity [0, 100], default 0
-    -l INT      Set the minimum alignment length, default 0
+    -i FLOAT    Set the minimum alignment identity [0, 100], default 90
+    -l INT      Set the minimum alignment length, default 20,000
     -p FLOAT    Extract the PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    Extract the query ontAlt read which align length is >= *% of its own length [0-1), default 0.5
+    -P FLOAT    Extract the query longAlt read which align length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
-    -version    show version number
+    -v|-version show version number
+    -h|-help    show help information
 
-See more information at https://github.com/wzxie/ONTbyAHR.
+See more information at https://github.com/wzxie/RAGA.
 ```
 
 ## Inputs and Outputs
