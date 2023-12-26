@@ -49,6 +49,28 @@ Options:
 See more information at https://github.com/wzxie/RAGA.
 ```
 
+```
+Usage: l4-6.sh [-r reference genome] [-c ccs reads] [options]
+Options:
+    Input/Output:
+    -r          reference genome
+    -c          ccs reads
+    -o          output directory
+
+    Polish:
+    -n INT      Number of Polishing Rounds [>=10], default 10
+
+    Filter:
+    -l INT      Set the minimum alignment length, default 10,000
+
+    Supp:
+    -t INT      number of threads, default 1
+    -v|-version show version number
+    -h|-help    show help information
+
+See more information at https://github.com/wzxie/RAGA.
+```
+
 ## Inputs and Outputs
 ### Input files
 The reference genome sequence file
