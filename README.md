@@ -3,6 +3,7 @@ Generate putative long reads with the help of query\`s assemblies, query\`s PacB
 
 ## Overview
 RAGA is capable of producing fake long reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
+
 ![示意图](https://github.com/wzxie/RAGA/blob/main/20231226%20%E5%8E%9F%E7%90%86%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
 
 ## Dependencies
