@@ -96,8 +96,8 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 ### Output files
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
-* The 'ontAlt_qry.fa' contains the final synthetic ONT reads used to aid in subsequent assembly.
-* The 'ontAlt_qry.svg' provides a simple statistics of the 'ontAlt_qry.fa'.
+* The 'longAlt_qry.fa' contains the final synthetic long reads used to aid in subsequent assembly.
+* The 'longAlt_qry.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
 ```
@@ -105,4 +105,6 @@ ATCGATCGATCGATCGATCGATCG...
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
-* Zhao rupeng:   2247290650@qq.com
+* Zhao rupeng:    2247290650@qq.com
+* Song jiaming:   jmsong@gxu.edu.cn
+* Chen lingling:  llchen@gxu.edu.cn
