@@ -133,7 +133,7 @@ else
 	[[ $ref == "" ]] && echo -e "ERROR: Path to reference genome not found, assign using -r." && exit
 	[[ $qry == "" ]] && echo -e "ERROR: Path to query genome not found, assign using -q." && exit
 	[[ $ccs == "" ]] && echo -e "ERROR: PacBio HiFi reads of query not found, assign using -c." && exit
-#	[[ $npr -lt 3 ]] && echo -e "ERROR: -n INT	Number of Polishing Rounds [>=3], default 3." && exit
+	[[ $npr -lt 3 ]] && echo -e "ERROR: -n INT	Number of Polishing Rounds [>=3], default 3." && exit
 	([[ $dfi -lt 0 ]] || [[ $dfi -gt 100 ]]) && echo -e "ERROR: -i FLOAT	Set the minimum alignment identity [0, 100], default 90." && exit
 	[[ -d $out ]] && echo -e "ERROR: Output directory already exists, please remove or set alternate output." && exit
 	[[ -d $out ]] || mkdir $out
