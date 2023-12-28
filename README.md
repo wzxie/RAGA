@@ -103,6 +103,10 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 ```
 
+## Note
+* When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the query contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input query assembly, the more reliable the output of RAGA is.
+* Because the query of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need query assembly. Therefore, users can directly take the query HiFi reads and the reference genome fasta as input, and the long sequence output by RAGA directly participates in the query assembly.
+
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
