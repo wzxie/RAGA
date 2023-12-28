@@ -12,8 +12,9 @@ RAGA is capable of producing fake long reads by utilizing the query's assembly a
 3. ragtag.py (v2.1.0)
 4. nucmer (4.0.0rc1)
 7. awk (GNU Awk 4.0.2)
-8. hifiasm (0.19.4-r575)
+8. hifiasm (0.19.6-r595)
 9. samtools (Version: 1.11)
+10. bedtools (v2.26.0)
 
 ## Installation
 Run the following commands to intall purge_dups (required):
