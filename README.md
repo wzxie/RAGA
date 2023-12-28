@@ -24,7 +24,7 @@ Run the following commands to intall purge_dups (required):
 
 ## Usage
 ```
-Usage: l3-8.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
+Usage: RAGA-same.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
 Options:
     Input/Output:
     -r          reference genome
@@ -50,7 +50,7 @@ See more information at https://github.com/wzxie/RAGA.
 ```
 
 ```
-Usage: l4-6.sh [-r reference genome] [-c ccs reads] [options]
+Usage: RAGA-diff.sh [-r reference genome] [-c ccs reads] [options]
 Options:
     Input/Output:
     -r          reference genome
