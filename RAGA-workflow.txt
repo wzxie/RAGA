@@ -10,7 +10,6 @@ Hifiasm was used to perform partial hybrid assembly of block query HiFi reads an
 4. filtering
 Minimap2 was used to align each block query HiFi reads with its block assembly, and samtools was used to calculate the block alignment, filtering out the block assembly sequences with block query HiFi reads covering breakpoints. Minimap2 was used to align the filtered block assembly sequences with query contigs fasta, filtering out the block assembly sequences that were completely similar to and significantly different from query contigs fasta. Finally, shorter block assembly sequences were filtered out to complete the generation of RAGA final long sequences.
 
-
 B. Different species as reference 
 1. correcting reference
 RAGA uses query HiFi reads to iterate correct the reference genome based on minimap2 and racon to obtain a mixed genome that is closer to the query genome. 
