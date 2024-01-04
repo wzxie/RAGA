@@ -1,8 +1,8 @@
 # RAGA
-Generate putative long reads with the help of query\`s assemblies, query\`s PacBio HiFi reads and reference genome.
+Generate putative long reads with the help of source\`s assemblies, source\`s PacBio HiFi reads and reference genome.
 
 ## Overview
-RAGA is capable of producing fake long reads by utilizing the query's assembly and query`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
+RAGA is capable of producing fake long reads by utilizing the source's assembly and source`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
 
 ![示意图](https://github.com/wzxie/RAGA/blob/main/%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
 
@@ -25,11 +25,11 @@ Run the following commands to intall purge_dups (required):
 
 ## Usage
 ```
-Usage: RAGA-same.sh [-r reference genome] [-q query genome] [-c ccs reads] [options]
+Usage: RAGA-same.sh [-r reference genome] [-q source genome] [-c ccs reads] [options]
 Options:
     Input/Output:
     -r          reference genome
-    -q          query genome
+    -q          source genome
     -c          ccs reads
     -o          output directory
 
@@ -40,7 +40,7 @@ Options:
     -i FLOAT    Set the minimum alignment identity [0, 100], default 90
     -l INT      Set the minimum alignment length, default 20,000
     -p FLOAT    Extract the PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    Extract the query longAlt read which align length is >= *% of its own length [0-1), default 0.5
+    -P FLOAT    Extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
@@ -79,12 +79,12 @@ The reference genome sequence file
 >Chr01
 ATCGATCGATCGATCGATCGATCG...
 ```
-The query genome sequence file
+The source genome sequence file
 ```
 >Contig1
 ATCGATCGATCGATCGATCGATCG...
 ```
-The query PacBio HiFi sequence file
+The source PacBio HiFi sequence file
 ```
 @*/ccs
 ATCGATCGATCGATCGATCGATCG...
@@ -97,16 +97,16 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 ### Output files
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
-* The 'longAlt_qry.fa' contains the final synthetic long reads used to aid in subsequent assembly.
-* The 'longAlt_qry_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
+* The 'longAlt_sur.fa' contains the final synthetic long reads used to aid in subsequent assembly.
+* The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
 ```
 ```
 
 ## Note
-* When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the query contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input query assembly, the more reliable the output of RAGA is.
-* Because the query of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need query assembly. Therefore, users can directly take the query HiFi reads and the reference genome fasta as input, and the long sequence output by RAGA directly participates in the query assembly.
+* When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the source contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input source assembly, the more reliable the output of RAGA is.
+* Because the source of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need source assembly. Therefore, users can directly take the source HiFi reads and the reference genome fasta as input, and the long sequence output by RAGA directly participates in the source assembly.
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
