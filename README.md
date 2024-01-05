@@ -1,5 +1,5 @@
 # RAGA
-Generate putative long reads with the help of source\`s assemblies, source\`s PacBio HiFi reads and reference genome.
+Generate putative long reads with the help of reference genome, source\`s assemblies, source\`s PacBio HiFi reads.
 
 ## Overview
 RAGA is capable of producing fake long reads by utilizing the source's assembly and source`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
@@ -17,7 +17,7 @@ RAGA is capable of producing fake long reads by utilizing the source's assembly 
 8. bedtools (v2.26.0)
 
 ## Installation
-Run the following commands to intall purge_dups (required):
+Run the following commands to intall RAGA (required):
 ```
 1. git clone https://github.com/wzxie/RAGA.git
 2. chmod 755 /path/to/RAGA/bin/*
