@@ -20,7 +20,7 @@ RAGA is capable of producing fake long reads by utilizing the source's assembly 
 Run the following commands to intall purge_dups (required):
 ```
 1. git clone https://github.com/wzxie/RAGA.git
-2. chmod 755 ./bin/*
+2. chmod 755 /path/to/RAGA/bin/*
 3. export PATH=/path/to/RAGA/bin/:$PATH
 ```
 
