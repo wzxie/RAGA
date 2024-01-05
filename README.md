@@ -52,7 +52,7 @@ Options:
 See more information at https://github.com/wzxie/RAGA.
 ```
 
-#### B. Different species as reference.
+### B. Different species as reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c ccs reads] [options]
 Options:
@@ -86,6 +86,8 @@ The source genome sequence file
 ```
 >Contig1
 ATCGATCGATCGATCGATCGATCG...
+>Contig2
+ATCGATCGATCGATCGATCGATCG...
 ```
 The source PacBio HiFi sequence file
 ```
@@ -104,12 +106,13 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
-A. Same Species as Reference.
+### A. Same Species as Reference.
 ```
-
+RAGA-same.sh -r ref.fa -q query.fa -c query.fq -o output_same -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
 ```
-B. Different species as reference.
+### B. Different species as reference.
 ```
+RAGA-diff.sh -r T2T-NIP.fa -c hifi-q30-10k.fq -o output_diff -t 6 -n 10 &> output_diff.log
 ```
 
 
