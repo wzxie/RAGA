@@ -4,7 +4,7 @@ Generate putative long reads with the help of source\`s assemblies, source\`s Pa
 ## Overview
 RAGA is capable of producing fake long reads by utilizing the source's assembly and source`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
 
-![示意图](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
+![workflow](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
 
 ## Dependencies
 1. minimap2 (2.22-r1101)
@@ -20,7 +20,8 @@ RAGA is capable of producing fake long reads by utilizing the source's assembly 
 Run the following commands to intall purge_dups (required):
 ```
 1. git clone https://github.com/wzxie/RAGA.git
-2. export PATH=/path/to/RAGA/bin/:$PATH
+2. chmod 755 ./bin/*
+3. export PATH=/path/to/RAGA/bin/:$PATH
 ```
 
 ## Usage
