@@ -25,6 +25,7 @@ Run the following commands to intall RAGA (required):
 ```
 
 ## Usage
+A. Same Species as Reference.
 ```
 Usage: RAGA-same.sh [-r reference genome] [-q source genome] [-c ccs reads] [options]
 Options:
@@ -51,6 +52,7 @@ Options:
 See more information at https://github.com/wzxie/RAGA.
 ```
 
+B. Different species as reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c ccs reads] [options]
 Options:
