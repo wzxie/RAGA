@@ -4,7 +4,7 @@ Generate putative long reads with the help of source\`s assemblies, source\`s Pa
 ## Overview
 RAGA is capable of producing fake long reads by utilizing the source's assembly and source`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
 
-![示意图](https://github.com/wzxie/RAGA/blob/main/%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
+![示意图](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
 
 ## Dependencies
 1. minimap2 (2.22-r1101)
