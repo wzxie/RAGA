@@ -52,7 +52,7 @@ Options:
 See more information at https://github.com/wzxie/RAGA.
 ```
 
-B. Different species as reference.
+#### B. Different species as reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c ccs reads] [options]
 Options:
