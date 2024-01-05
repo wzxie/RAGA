@@ -1,5 +1,5 @@
 # RAGA
-Generate putative long reads with the help of reference genome, source\`s assemblies, source\`s PacBio HiFi reads.
+RAGA is a pipeline designed to generate alternative long reads by leveraging the reference genome, the source\'s assembly, and the source\'s PacBio HiFi reads.
 
 ## Overview
 RAGA is capable of producing fake long reads by utilizing the source's assembly and source`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the Usage part and use our pipeline to do it.
