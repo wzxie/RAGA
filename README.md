@@ -25,7 +25,7 @@ Run the following commands to intall RAGA (required):
 ```
 
 ## Usage
-A. Same Species as Reference.
+### A. Same Species as Reference.
 ```
 Usage: RAGA-same.sh [-r reference genome] [-q source genome] [-c ccs reads] [options]
 Options:
@@ -104,8 +104,14 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
+A. Same Species as Reference.
+```
+
+```
+B. Different species as reference.
 ```
 ```
+
 
 ## Note
 * When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the source contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input source assembly, the more reliable the output of RAGA is.
