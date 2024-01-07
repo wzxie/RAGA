@@ -134,5 +134,5 @@ hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
-* Song jiaming:   jmsong@gxu.edu.cn
+* Song jiaming:   jmsong@swu.edu.cn
 * Chen lingling:  llchen@gxu.edu.cn
