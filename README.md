@@ -102,7 +102,7 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 ### Output files
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
-* The 'longAlt_sur.fa' contains the final synthetic long reads used to aid in subsequent assembly.
+* The 'longAlt_sur.fa' contains the final alternative long reads used to aid in subsequent assembly.
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
@@ -115,17 +115,16 @@ gzip -d Col-CEN_v1.2.fasta.gz
 ```
 ### 2. De novo assembly
 ```
-hifiasm -o test -t 4 --primary CRR591673.fastq
-awk '/^S/{print ">"$2;print $3}' test.p_ctg.gfa > denovo.fa
+hifiasm -o denovo -t 6 --primary CRR591673.fastq
+awk '/^S/{print ">"$2;print $3}' denovo.p_ctg.gfa > denovo.fa
 ```
-
 ### 3. Run RAGA pipeline
 ```
-RAGA-same.sh -r Col-CEN_v1.2.fasta -q denovo.fa -c CRR591673.fastq -o test -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
+RAGA-same.sh -r Col-CEN_v1.2.fasta -q denovo.fa -c CRR591673.fastq -o output_same -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
 ```
 ### 4. Re de novo assembly
 ```
-hifiasm -o re-test -t 4 --primary --ul longAlt_sur.fa CRR591673.fastq
+hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
 ```
 
 ## Note
