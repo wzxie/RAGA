@@ -106,15 +106,27 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
 
 ## Example
-### A. Same Species as Reference.
+### 1. Download data
 ```
-RAGA-same.sh -r example/ref.fa -q example/source_assembly.fa -c source_ccs.fq -o output_same -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
+wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
+wget https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
+gzip -d CRR591673.fastq.gz
+gzip -d Col-CEN_v1.2.fasta.gz
 ```
-### B. Different species as reference.
+### 2. De novo assembly
 ```
-RAGA-diff.sh -r example/ref.fa -c example/source_ccs.fq -o output_diff -t 6 -n 10 &> output_diff.log
+hifiasm -o test -t 4 --primary CRR591673.fastq
+awk '/^S/{print ">"$2;print $3}' test.p_ctg.gfa > denovo.fa
 ```
 
+### 3. Run RAGA pipeline
+```
+RAGA-same.sh -r Col-CEN_v1.2.fasta -q denovo.fa -c CRR591673.fastq -o test -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
+```
+### 4. Re de novo assembly
+```
+hifiasm -o re-test -t 4 --primary --ul longAlt_sur.fa CRR591673.fastq
+```
 
 ## Note
 * When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the source contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input source assembly, the more reliable the output of RAGA is.
