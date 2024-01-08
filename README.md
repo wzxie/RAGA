@@ -83,7 +83,7 @@ The reference genome sequence file
 >Chr01
 ATCGATCGATCGATCGATCGATCG...
 ```
-The source genome sequence file
+The source assembly sequence file
 ```
 >Contig1
 ATCGATCGATCGATCGATCGATCG...
@@ -92,11 +92,11 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 The source PacBio HiFi sequence file
 ```
-@*/ccs
+@*/ccs1
 ATCGATCGATCGATCGATCGATCG...
 +
 ~{m~pI~~e~P~c~~o~[o~q_~~...
-@*/ccs
+@*/ccs2
 ATCGATCGATCGATCGATCGATCG...
 +
 =<G~~n~~~~V~~~~~~~}~~~~~...
@@ -130,7 +130,7 @@ hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
 
 ## Note
 * When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the source contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input source assembly, the more reliable the output of RAGA is.
-* Because the source of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need source assembly. Therefore, users can directly take the source HiFi reads and the reference genome fasta as input, and the long sequence output by RAGA directly participates in the source assembly.
+* Because the source of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need source assembly. Therefore, users can directly take the source PacBio HiFi reads and the reference genome fasta as input, and the alternative long sequences output by RAGA directly participates in the source assembly.
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
