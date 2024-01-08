@@ -15,6 +15,7 @@ RAGA is capable of producing alternative long reads by utilizing the source\'s a
 6. hifiasm (0.19.6-r595)
 7. samtools (Version: 1.11)
 8. bedtools (v2.26.0)
+9. seqkit (Version: 2.5.1)
 
 ## Installation
 Run the following commands to intall RAGA (required):
@@ -27,22 +28,22 @@ Run the following commands to intall RAGA (required):
 ## Usage
 ### A. Same Species as Reference.
 ```
-Usage: RAGA-same.sh [-r reference genome] [-q source genome] [-c ccs reads] [options]
+Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
 Options:
     Input/Output:
     -r          reference genome
-    -q          source genome
-    -c          ccs reads
+    -q          source assembly
+    -c          source PacBio HiFi reads
     -o          output directory
 
     Polish:
-    -n INT      Number of Polishing Rounds [>=3], default 3
+    -n INT      number of Polishing Rounds [>=3], default 3
 
     Filter:
-    -i FLOAT    Set the minimum alignment identity [0, 100], default 90
-    -l INT      Set the minimum alignment length, default 20,000
-    -p FLOAT    Extract the PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    Extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+    -i FLOAT    set the minimum alignment identity [0, 100], default 90
+    -l INT      set the minimum alignment length, default 20,000
+    -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+    -P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
@@ -54,18 +55,18 @@ See more information at https://github.com/wzxie/RAGA.
 
 ### B. Different species as reference.
 ```
-Usage: RAGA-diff.sh [-r reference genome] [-c ccs reads] [options]
+Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
 Options:
     Input/Output:
     -r          reference genome
-    -c          ccs reads
+    -c          source PacBio HiFi reads
     -o          output directory
 
     Polish:
-    -n INT      Number of Polishing Rounds [>=10], default 10
+    -n INT      number of Polishing Rounds [>=10], default 10
 
     Filter:
-    -l INT      Set the minimum alignment length, default 10,000
+    -l INT      set the minimum alignment length, default 10,000
 
     Supp:
     -t INT      number of threads, default 1
