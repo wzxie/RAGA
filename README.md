@@ -12,7 +12,7 @@ RAGA is capable of producing alternative long reads by utilizing the source\'s a
 3. ragtag.py (v2.1.0)
 4. nucmer (4.0.0rc1)
 5. awk (GNU Awk 4.0.2)
-6. hifiasm (0.19.6-r595)
+6. hifiasm (0.19.6-r595 or higher)
 7. samtools (Version: 1.11)
 8. bedtools (v2.26.0)
 9. seqkit (Version: 2.5.1)
