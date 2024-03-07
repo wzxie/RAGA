@@ -130,7 +130,7 @@ hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
 
 ## Note
 * RAGA aligns the reference with the source contigs to identify the alignment blocks near the gaps when the input is the reference of the same species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
-* Because the source of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need source assembly. Therefore, users can directly take the source PacBio HiFi reads and the reference genome fasta as input, and the alternative long sequences output by RAGA directly participates in the source assembly.
+* In the absence of a reference for the target species, users can input source PacBio HiFi reads and the reference FASTA file of closely related species directly, eliminating the need for source assembly.
 
 ## Contact
 We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
