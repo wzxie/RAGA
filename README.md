@@ -129,7 +129,7 @@ hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
 ```
 
 ## Note
-* When the input is the reference genome of the same species, RAGA needs to compare the reference genome with the source contigs to determine the gaps location and alignment block information. Therefore, the higher the quality of the input source assembly, the more reliable the output of RAGA is.
+* RAGA aligns the reference with the source contigs to identify the alignment blocks near the gaps when the input is the reference of the same species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
 * Because the source of the non-related high-quality reference genome usually has a large and complex genome, it may take a lot of time to carry out an assembly. Therefore, when designing the process of RAGA input for the reference genome of the same species, the whole operation process of RAGA does not need source assembly. Therefore, users can directly take the source PacBio HiFi reads and the reference genome fasta as input, and the alternative long sequences output by RAGA directly participates in the source assembly.
 
 ## Contact
