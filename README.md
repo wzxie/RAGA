@@ -4,7 +4,7 @@ RAGA is a pipeline designed to generate alternative long reads using the referen
 ## Overview
 RAGA is capable of producing alternative long reads by utilizing the source\'s assembly and the source\`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the "Usage" part and use our pipeline to do it.
 
-![workflow](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
+![workflow](https://github.com/wzxie/RAGA/blob/main/workflow_0414.jpg)
 
 ## Dependencies
 1. minimap2 (2.22-r1101)
