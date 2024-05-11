@@ -1,8 +1,8 @@
 # RAGA
-RAGA is a pipeline designed to generate alternative long reads using the reference genome, the source\'s assembly, and the source\'s PacBio HiFi reads.
+RAGA is a tool designed to improve assembly quality by using the reference genome.
 
 ## Overview
-RAGA is capable of producing alternative long reads by utilizing the source\'s assembly and the source\`s PacBio HiFi reads, in conjunction with a reference genome. You can follow the "Usage" part and use our pipeline to do it.
+The core idea of RAGA is to generate alternative long reads by utilizing the assembly information of source data and PacBio HiFi sequencing reads, in conjunction with a reference genome. Users can follow the guidance in the "Usage" section and achieve this goal through our analysis pipeline.
 
 ![workflow](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
 
@@ -20,9 +20,17 @@ RAGA is capable of producing alternative long reads by utilizing the source\'s a
 ## Installation
 Run the following commands to intall RAGA (required):
 ```
+(1) Download RAGA from GitHub
 1. git clone https://github.com/wzxie/RAGA.git
 2. chmod 755 /path/to/RAGA/bin/*
 3. export PATH=/path/to/RAGA/bin/:$PATH
+(2) Download dependencies
+a.install with conda
+conda create -y -n raga
+conda activate raga
+
+or b. install with source
+
 ```
 
 ## Usage
