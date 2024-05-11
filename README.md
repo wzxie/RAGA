@@ -224,7 +224,9 @@ ATCGATCGATCGATCGATCGATCG...
 * In the absence of a reference for the target species, users can input source PacBio HiFi reads and the reference FASTA file of closely related species directly, eliminating the need for source assembly.
 
 ## Contact
-We hope this pipeline could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
+We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
+* Luo yuhong:     luoyuhong0720@163.com
+* Xie wenzhao:    xwz080311@163.com
 * Song jiaming:   jmsong@swu.edu.cn
 * Chen lingling:  llchen@gxu.edu.cn
