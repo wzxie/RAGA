@@ -25,16 +25,119 @@ Run the following commands to intall RAGA (required):
 2. chmod 755 /path/to/RAGA/bin/*
 3. export PATH=/path/to/RAGA/bin/:$PATH
 (2) Download dependencies
+
 a.install with conda
 conda create -y -n raga
 conda activate raga
+conda install bioconda::minimap2 -y
+conda install bioconda::racon -y
+conda install bioconda::ragtag -y
+conda install bioconda::mummer4 -y
+conda install bioconda::hifiasm -y
+conda install bioconda::samtools -y
+conda install bioconda::bedtools -y
+conda install bioconda::seqkit -y
 
 or b. install with source
-
+#minimap2
+git clone https://github.com/lh3/minimap2
+cd minimap2 && make
+#racon
+git clone --recursive https://github.com/lbcb-sci/racon.git racon
+cd racon
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+#ragtag
+git clone https://github.com/malonge/RagTag.git
+#mummer
+git clone https://github.com/mummer4/mummer.git
+cd mummer
+./configure --prefix=/path/to/installation
+make
+make install
+#hifiasm
+git clone https://github.com/chhylp123/hifiasm
+cd hifiasm && make
+#samtools
+git clone https://github.com/samtools/samtools.git
+cd samtools
+autoheader            # Build config.h.in (this may generate a warning about
+                      # AC_CONFIG_SUBDIRS - please ignore it).
+autoconf -Wno-syntax  # Generate the configure script
+./configure           # Needed for choosing optional functionality
+make
+make install
+#bedtools
+wget https://github.com/arq5x/bedtools2/releases/download/v2.29.1/bedtools-2.29.1.tar.gz
+tar -zxvf bedtools-2.29.1.tar.gz
+cd bedtools2
+make
+#seqkit
+wget https://github.com/shenwei356/seqkit/releases/download/v2.8.0/seqkit_linux_arm64.tar.gz
+tar -zxvf *.tar.gz
+#Add all tools to the environment variables
 ```
-
+## Example
+### 1. Download example data
+```
+wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
+wget https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
+gzip -d CRR591673.fastq.gz
+gzip -d Col-CEN_v1.2.fasta.gz
+```
+### 2. Run RAGA
+```
+RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -o test -t 8 &> test.log
+```
+### 3. Output
+```
+contigs.fa # de novo assembly contigs fasta
+optimized.fa # RAGA optimized assembly contigs fasta
+test-scaffolds.fa # Reference-based scaffold-level assembly of optimized.fa
+contigs-tmp # Temporary files in de novo assembly
+optimized-tmp # Temporary files in RAGA optimized assembly
+test # Files generated during the alternative long sequences production process
+test-scaffolds # Files in scaffolding
+```
 ## Usage
-### A. Same Species as Reference.
+### Quick start
+Haploid assembly using only HiFi reads of the same species reference genome.
+```
+Usage: RAGA.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+Options:
+        Input/Output:
+        -r          reference genome
+        -c          source PacBio HiFi reads
+        -o          output directory
+
+        Polish:
+        -n INT      number of Polishing Rounds [>=3], default 3
+
+        Filter:
+        -i FLOAT    set the minimum alignment identity [0, 100], default 90
+        -l INT      set the minimum alignment length, default 20,000
+        -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+        -P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+
+        Supp:
+        -t INT      number of threads, default 1
+        -v|-version show version number
+        -h|-help    show help information
+
+See more information at https://github.com/wzxie/RAGA.
+```
+### Proceed in a stepwise fashion
+Assembly involving multiple types of reads, multiple reference genomes, closely related species as the reference genome, or non-haploid genomes.
+
+(i) denovo
+```
+# Select the appropriate de novo assembly tool for assembly.
+```
+(ii) Generate alternative long reads.
+
+A. Same Species as Reference.
 ```
 Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
 Options:
@@ -60,8 +163,7 @@ Options:
 
 See more information at https://github.com/wzxie/RAGA.
 ```
-
-### B. Different species as reference.
+B. Different species as reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
 Options:
@@ -83,7 +185,10 @@ Options:
 
 See more information at https://github.com/wzxie/RAGA.
 ```
-
+(iii) Utilize alternative long reads.
+```
+# Incorporate alternative long reads as ONT reads into the original assembly reads, and use hybrid assembly tools for assembly.
+```
 ## Inputs and Outputs
 ### Input files
 The reference genome sequence file
@@ -113,28 +218,6 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
 * The 'longAlt_sur.fa' contains the final alternative long reads used to aid in subsequent assembly.
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
-
-## Example
-### 1. Download example data
-```
-wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
-wget https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
-gzip -d CRR591673.fastq.gz
-gzip -d Col-CEN_v1.2.fasta.gz
-```
-### 2. De novo assembly
-```
-hifiasm -o denovo -t 6 --primary CRR591673.fastq
-awk '/^S/{print ">"$2;print $3}' denovo.p_ctg.gfa > denovo.fa
-```
-### 3. Run RAGA pipeline
-```
-RAGA-same.sh -r Col-CEN_v1.2.fasta -q denovo.fa -c CRR591673.fastq -o output_same -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
-```
-### 4. Re de novo assembly
-```
-hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
-```
 
 ## Note
 * RAGA aligns the reference with the source contigs to identify the alignment blocks near the gaps when the input is the reference of the same species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
