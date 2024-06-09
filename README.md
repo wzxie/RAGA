@@ -25,19 +25,13 @@ Run the following commands to intall RAGA (required):
 2. chmod 755 /path/to/RAGA/bin/*
 3. export PATH=/path/to/RAGA/bin/:$PATH
 (2) Download dependencies
-
-a.install with conda
+a. install with conda
 conda create -y -n raga
 conda activate raga
-conda install bioconda::minimap2 -y
-conda install bioconda::racon -y
-conda install bioconda::ragtag -y
-conda install bioconda::mummer4 -y
-conda install bioconda::hifiasm -y
-conda install bioconda::samtools -y
-conda install bioconda::bedtools -y
-conda install bioconda::seqkit -y
-
+conda install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam -y
+conda install conda-forge::python -y
+git clone https://github.com/malonge/RagTag.git
+#Add RagTag to the environment variables
 or b. install with source
 #minimap2
 git clone https://github.com/lh3/minimap2
