@@ -1,7 +1,7 @@
 RAGA Workflow
 A. Homologous species
 1. Correcting reference
-We utilize minimap2 to align the source PacBio HiFi reads with the source contigs for filtering out low-quality reads. Then, based on 'minimap2' and 'racon', the filtered source's PacBio HiFi reads are used to iteratively polish the reference genome, resulting in a mixed genome that closely resembles the source assembly.
+We utilize 'minimap2' to align the source PacBio HiFi reads with the source contigs for filtering out low-quality reads. Then, based on 'minimap2' and 'racon', the filtered source's PacBio HiFi reads are used to iteratively polish the reference genome, resulting in a mixed genome that closely resembles the source assembly.
 2. Alignment
 Using the mixed genome as a reference, source contigs are scaffolded by 'RagTag' to obtain source scaffolds. The mixed genome and source scaffolds are aligned using 'nucmer', and the result is then filtered and formatted with 'delta-filter' and 'show-coords'. The source PacBio HiFi reads were aligned to the mixed genome using 'Minimap2'.
 3. Partial assembly
@@ -10,11 +10,11 @@ Based on the coordinates of each GAP, we extracted the high-quality alignment bl
 With the assembly of each GAP, 1) Minimap2 was used to align PacBio HiFi reads to their corresponding assemblies, as well as eliminate assembly sequences that contained breakpoints. 2) We used Minimap2 to align the assembly sequences from the previous step with the contigs of the source, removing the assembly sequences that were identical to the source contigs. 3) Shorter assembly sequences were discarded, and the final long sequences were generated.
 
 B. Closely related species
-1. correcting reference
-RAGA uses source PacBio HiFi reads to iterate correct the reference genome based on minimap2 and racon to obtain a mixed genome that is closer to the source assembly. 
-2. alignment
-Using mixed genome as a reference, we performed alignment with source PacBio HiFi reads using minimap2. We filtered the alignment of each read, retaining only the alignment with the main alignment "tp:A:P" and the accurate alignment length accounting for 99% of the total length of the reads. We used bedtools to merge the alignment regions of each filtered read, filtering out shorter alignments. 
-3. partial hybrid assembly
-Same as the process with the same species as input. 
-4. filtering
-The minimap2 was used to align each block source PacBio HiFi reads with its block assembly, and samtools were used to statistically analyze the results, filtering out the block assembly sequences that had block source PacBio HiFi reads covering breakpoints. Finally, the shorter block assembly sequences were filtered out to complete the generation of RAGA's final long sequences.
+1. Correcting reference
+Based on 'minimap2' and 'racon', the source's PacBio HiFi reads are used to iteratively polish the reference genome, resulting in a mixed genome that closely resembles the source assembly.
+2. Alignment
+We used ’minimap2‘ to align PacBio HiFi reads to the mixed genome, keeping the uniquely matched reads identified with the "tp:A:P" tag. The alignment regions of each filtered read were then merged using 'bedtools', removing shorter alignments in the process.
+3. Partial assembly
+The process is the same as that for homologous species.
+4. Filtering
+With the assembly of each GAP, 1) Minimap2 was used to align PacBio HiFi reads to their corresponding assemblies, as well as eliminate assembly sequences that contained breakpoints. 2) Shorter assembly sequences were discarded, and the final long sequences were generated.
