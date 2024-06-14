@@ -4,11 +4,10 @@ A. Homologous species
 We utilize minimap2 to align the source PacBio HiFi reads with the source contigs for filtering out low-quality reads. Then, based on 'minimap2' and 'racon', the filtered source's PacBio HiFi reads are used to iteratively polish the reference genome, resulting in a mixed genome that closely resembles the source assembly.
 2. Alignment
 Using the mixed genome as a reference, source contigs are scaffolded by 'RagTag' to obtain source scaffolds. The mixed genome and source scaffolds are aligned using 'nucmer', and the result is then filtered and formatted with 'delta-filter' and 'show-coords'. The source PacBio HiFi reads were aligned to the mixed genome using 'Minimap2'.
-3. Partial hybrid assembly
-Based on the coordinates of each GAP, we extracted the high-quality alignment block and the source PacBio HiFi reads that overlapped with it from the mixed genome. Following that, the raw long sequences were obtained from the output of a partial assembly using 'hifiasm'.
-
+3. Partial assembly
+Based on the coordinates of each GAP, we extracted the high-quality alignment block from the mixed genome and the source PacBio HiFi reads that overlapped with it from the source assembly. Following that, the raw long sequences were obtained from the partial assembly using 'hifiasm'.
 4. Filtering
-Minimap2 was used to align each block source PacBio HiFi reads with its block assembly, and samtools was used to calculate the block alignment, filtering out block assembly sequences where block source PacBio HiFi reads cover breakpoints. Minimap2 was used to align the filtered block assembly sequences with source contigs, filtering out the block assembly sequences that were completely similar to and significantly different from source contigs. Finally, shorter block assembly sequences were filtered out to complete the generation of RAGA`s final long sequences.
+With the assembly of each GAP, 1) Minimap2 was used to align PacBio HiFi reads to their corresponding assemblies, as well as eliminate assembly sequences that contained breakpoints. 2) We used Minimap2 to align the assembly sequences from the previous step with the contigs of the source, removing the assembly sequences that were identical to the source contigs. 3) Shorter assembly sequences were discarded, and the final long sequences were generated.
 
 B. Closely related species
 1. correcting reference
