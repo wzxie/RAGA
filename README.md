@@ -1,8 +1,8 @@
 # RAGA
-RAGA is a tool designed to improve assembly quality by using the reference genome.
+RAGA is a tool designed to improve assembly quality with the assistance of a reference genome.
 
 ## Overview
-The core idea of RAGA is to generate alternative long reads by utilizing the assembly information of source data and PacBio HiFi sequencing reads, in conjunction with a reference genome. Users can follow the guidance in the "Usage" section and achieve this goal through our analysis pipeline.
+The core idea of RAGA is to generate alternative long reads by leveraging the source assembly and PacBio HiFi sequencing reads, with the assistance of a reference genome. Users can follow the guidance provided in the "Usage" section to achieve this goal through our analysis pipeline.
 
 ![workflow](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
 
@@ -18,43 +18,45 @@ The core idea of RAGA is to generate alternative long reads by utilizing the ass
 9. seqkit (Version: 2.5.1)
 
 ## Installation
-Run the following commands to intall RAGA (required):
+Run the following command to install RAGA and its dependencies.
 ```
 (1) Download RAGA from GitHub
 1. git clone https://github.com/wzxie/RAGA.git
 2. chmod 755 /path/to/RAGA/bin/*
 3. export PATH=/path/to/RAGA/bin/:$PATH
+
 (2) Download dependencies
 a. install with conda
-conda create -y -n raga
-conda activate raga
+conda create -y -n RAGA
+conda activate RAGA
 conda install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam -y
 conda install conda-forge::python -y
 git clone https://github.com/malonge/RagTag.git
-#Add RagTag to the environment variables
-or b. install with source
-#minimap2
+# Add RagTag to the PATH.
+
+b. install with source
+# minimap2
 git clone https://github.com/lh3/minimap2
 cd minimap2 && make
-#racon
+# racon
 git clone --recursive https://github.com/lbcb-sci/racon.git racon
 cd racon
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
-#ragtag
+# ragtag
 git clone https://github.com/malonge/RagTag.git
-#mummer
+# mummer
 git clone https://github.com/mummer4/mummer.git
 cd mummer
 ./configure --prefix=/path/to/installation
 make
 make install
-#hifiasm
+# hifiasm
 git clone https://github.com/chhylp123/hifiasm
 cd hifiasm && make
-#samtools
+# samtools
 git clone https://github.com/samtools/samtools.git
 cd samtools
 autoheader            # Build config.h.in (this may generate a warning about
@@ -63,15 +65,15 @@ autoconf -Wno-syntax  # Generate the configure script
 ./configure           # Needed for choosing optional functionality
 make
 make install
-#bedtools
+# bedtools
 wget https://github.com/arq5x/bedtools2/releases/download/v2.29.1/bedtools-2.29.1.tar.gz
 tar -zxvf bedtools-2.29.1.tar.gz
 cd bedtools2
 make
-#seqkit
+# seqkit
 wget https://github.com/shenwei356/seqkit/releases/download/v2.8.0/seqkit_linux_arm64.tar.gz
 tar -zxvf *.tar.gz
-#Add all tools to the environment variables
+# Add all the software to the PATH.
 ```
 ## Example
 ### 1. Download example data
@@ -83,55 +85,54 @@ gzip -d Col-CEN_v1.2.fasta.gz
 ```
 ### 2. Run RAGA
 ```
-RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -o test -t 8 &> test.log
+RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> test.log
 ```
 ### 3. Output
 ```
-contigs.fa # de novo assembly contigs fasta
-optimized.fa # RAGA optimized assembly contigs fasta
-test-scaffolds.fa # Reference-based scaffold-level assembly of optimized.fa
-contigs-tmp # Temporary files in de novo assembly
-optimized-tmp # Temporary files in RAGA optimized assembly
-test # Files generated during the alternative long sequences production process
-test-scaffolds # Files in scaffolding
+Initial_assembly/initial.fa             # de novo assembly
+Alternative_reads/longAlt_sur.fa        # Alternative long reads by RAGA
+Optimized_assembly/RAGA-optimized.fa    # Optimized assembly
 ```
 ## Usage
 ### Quick start
-Haploid assembly using only HiFi reads of the same species reference genome.
 ```
 Usage: RAGA.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+
 Options:
-        Input/Output:
-        -r          reference genome
-        -c          source PacBio HiFi reads
-        -o          output directory
+    Input/Output:
+    -r          reference genome
+    -c          source PacBio HiFi reads
 
-        Polish:
-        -n INT      number of Polishing Rounds [>=3], default 3
+    Assembly type:
+    -homo       assemble inbred/homozygous genomes
+    -hetero     assemble heterozygous genomes
+    -haplotype  generates a pair of haplotype-resolved assemblies with paired-end Hi-C reads
 
-        Filter:
-        -i FLOAT    set the minimum alignment identity [0, 100], default 90
-        -l INT      set the minimum alignment length, default 20,000
-        -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-        -P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+    Polish:
+    -n INT      number of Polishing Rounds [>=3], default 3
 
-        Supp:
-        -t INT      number of threads, default 1
-        -v|-version show version number
-        -h|-help    show help information
+    Filter:
+    -i FLOAT    set the minimum alignment identity [0, 100], default 99
+    -l INT      set the minimum alignment length, default 20,000
+    -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+    -P FLOAT    extract the source longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
+
+    Supp:
+    -t INT      number of threads, default 1
+    -v|-version show version number
+    -h|-help    show help information
 
 See more information at https://github.com/wzxie/RAGA.
 ```
 ### Proceed in a stepwise fashion
-Assembly involving multiple types of reads, multiple reference genomes, closely related species as the reference genome, or non-haploid genomes.
+Assembly may involve multiple types of reads, multiple reference genomes, closely related species as the reference genome, or non-haploid genomes.
 
-(i) denovo
+(i) de novo
 ```
-# Select the appropriate de novo assembly tool for assembly.
+# Select the appropriate de novo assembler for assembly.
 ```
 (ii) Generate alternative long reads.
-
-A. Same Species as Reference.
+A. Homologous species as a reference.
 ```
 Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
 Options:
@@ -145,10 +146,10 @@ Options:
     -n INT      number of Polishing Rounds [>=3], default 3
 
     Filter:
-    -i FLOAT    set the minimum alignment identity [0, 100], default 90
+    -i FLOAT    set the minimum alignment identity [0, 100], default 99
     -l INT      set the minimum alignment length, default 20,000
     -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+    -P FLOAT    extract the source longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
@@ -157,7 +158,7 @@ Options:
 
 See more information at https://github.com/wzxie/RAGA.
 ```
-B. Different species as reference.
+B. Closely related species as reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
 Options:
