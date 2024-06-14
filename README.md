@@ -87,12 +87,6 @@ gzip -d Col-CEN_v1.2.fasta.gz
 ```
 RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> test.log
 ```
-### 3. Output
-```
-Initial_assembly/initial.fa             # de novo assembly
-Alternative_reads/longAlt_sur.fa        # Alternative long reads by RAGA
-Optimized_assembly/RAGA-optimized.fa    # Optimized assembly
-```
 ## Usage
 ### Quick start
 ```
@@ -127,11 +121,12 @@ See more information at https://github.com/wzxie/RAGA.
 ### Proceed in a stepwise fashion
 Assembly may involve multiple types of reads, multiple reference genomes, closely related species as the reference genome, or non-haploid genomes.
 
-(i) de novo
+(i) Initial_assembly.
 ```
 # Select the appropriate de novo assembler for assembly.
 ```
 (ii) Generate alternative long reads.
+
 A. Homologous species as a reference.
 ```
 Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
@@ -158,7 +153,7 @@ Options:
 
 See more information at https://github.com/wzxie/RAGA.
 ```
-B. Closely related species as reference.
+B. Closely related species as a reference.
 ```
 Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
 Options:
@@ -180,9 +175,9 @@ Options:
 
 See more information at https://github.com/wzxie/RAGA.
 ```
-(iii) Utilize alternative long reads.
+(iii) Optimized_assembly.
 ```
-# Incorporate alternative long reads as ONT reads into the original assembly reads, and use hybrid assembly tools for assembly.
+# Incorporate alternative long reads into the original reads and reassemble.
 ```
 ## Inputs and Outputs
 ### Input files
@@ -210,16 +205,18 @@ ATCGATCGATCGATCGATCGATCG...
 =<G~~n~~~~V~~~~~~~}~~~~~...
 ```
 ### Output files
+* Initial_assembly/initial.fa             # de novo assembly
+* Alternative_reads/longAlt_sur.fa        # Alternative long reads by RAGA
+* Optimized_assembly/RAGA-optimized.fa    # Optimized assembly
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
-* The 'longAlt_sur.fa' contains the final alternative long reads used to aid in subsequent assembly.
-* The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_qry.fa'.
+* The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_sur.fa'.
 
 ## Note
-* RAGA aligns the reference with the source contigs to identify the alignment blocks near the gaps when the input is the reference of the same species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
-* In the absence of a reference for the target species, users can input source PacBio HiFi reads and the reference FASTA file of closely related species directly, eliminating the need for source assembly.
+* RAGA aligns the reference with the source contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
+* In the absence of a high-quality reference for the source species, users can input PacBio HiFi reads from the source species and the reference FASTA file of closely related species directly, eliminating the need for source assembly.
 
 ## Contact
-We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the github page to report issues or email us with any suggestions.
+We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the GitHub page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
 * Luo yuhong:     luoyuhong0720@163.com
 * Xie wenzhao:    xwz080311@163.com
