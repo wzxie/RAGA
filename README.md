@@ -205,9 +205,9 @@ ATCGATCGATCGATCGATCGATCG...
 =<G~~n~~~~V~~~~~~~}~~~~~...
 ```
 ### Output files
-* Initial_assembly/initial.fa             # de novo assembly
-* Alternative_reads/longAlt_sur.fa        # Alternative long reads by RAGA
-* Optimized_assembly/RAGA-optimized.fa    # Optimized assembly
+* Initial_assembly/initial.fa                   # de novo assembly
+* Alternative_reads/longAlt_sur.fa              # Alternative long reads by RAGA
+* Optimized_assembly/RAGA-optimized.fa          # Optimized assembly
 * The 'gapA_area.svg' allows for visual observation of the extracted regions from the reference.
 * The 'longAlt_sur_lenDis.svg' provides a simple statistics of the 'longAlt_sur.fa'.
 
