@@ -96,6 +96,8 @@ Options:
     Input/Output:
     -r          reference genome
     -c          source PacBio HiFi reads
+    -hic1       source Hi-C_r1 reads
+    -hic2       source Hi-C_r2 reads
 
     Assembly type:
     -homo       assemble inbred/homozygous genomes
