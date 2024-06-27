@@ -31,6 +31,9 @@ conda create -y -n RAGA
 conda activate RAGA
 conda install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam -y
 git clone https://github.com/malonge/RagTag.git
+cd RagTag
+chmod +x *
+export PATH=/path/to/RagTag:$PATH
 # Add RagTag to the PATH.
 
 b. install with source
