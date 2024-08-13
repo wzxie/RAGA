@@ -212,7 +212,7 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 * Initial_assembly/initial.fa              # de novo assembly
 * Alternative_reads/longAlt_sur.fa         # Alternative long reads by RAGA
-* Optimized_assembly/RAGA-optimized.fa     # Optimized assembly
+* Optimized_assembly/optimized.fa          # Optimized assembly
 * The 'gapA_area.svg'                      # Visualization of GAP area
 * The 'longAlt_sur_lenDis.svg'             # statistics of the 'longAlt_sur.fa'
 ```
