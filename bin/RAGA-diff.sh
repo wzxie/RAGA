@@ -133,7 +133,7 @@ elif [ "$ver" == "version" ]; then
 else
 	[[ $ref == "" ]] && echo -e "ERROR: path to reference genome not found, assign using -r." && exit 1
 	[[ $ccs == "" ]] && echo -e "ERROR: path to source PacBio HiFi reads not found, assign using -c." && exit 1
-#	[[ $npr -lt 10 ]] && echo -e "ERROR: number of Polishing Rounds [>=10], default 10." && exit 1
+	[[ $npr -lt 10 ]] && echo -e "ERROR: number of Polishing Rounds [>=10], default 10." && exit 1
 	[[ -d $out ]] && echo -e "ERROR: output directory already exists, please remove or set alternate output." && exit 1
 	[[ -d $out ]] || mkdir $out
 fi
