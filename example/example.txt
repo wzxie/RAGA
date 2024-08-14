@@ -4,12 +4,5 @@ wget https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
 gzip -d CRR591673.fastq.gz
 gzip -d Col-CEN_v1.2.fasta.gz
 
-2. De novo assembly
-hifiasm -o denovo -t 6 --primary CRR591673.fastq
-awk '/^S/{print ">"$2;print $3}' denovo.p_ctg.gfa > denovo.fa
-
-3. Run RAGA pipeline
-RAGA-same.sh -r Col-CEN_v1.2.fasta -q denovo.fa -c CRR591673.fastq -o output_same -t 6 -n 3 -i 90 -l 20000 -p 0.9 -P 0.5 &> output_same.log
-
-4. Re de novo assembly
-hifiasm -o re-denovo -t 6 --primary --ul longAlt_sur.fa CRR591673.fastq
+2. Run RAGA
+RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
