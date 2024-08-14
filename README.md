@@ -87,7 +87,7 @@ gzip -d Col-CEN_v1.2.fasta.gz
 ```
 ### 2. Run RAGA
 ```
-RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> test.log
+RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
 ```
 ## Usage
 ### Quick start
