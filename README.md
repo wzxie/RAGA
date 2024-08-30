@@ -81,7 +81,7 @@ tar -zxvf *.tar.gz
 ### 1. Download example data
 ```
 wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
-wget https://github.com/schatzlab/Col-CEN/blob/main/v1.2/Col-CEN_v1.2.fasta.gz
+wget https://cbi.gxu.edu.cn/download/rpzhao/Col-CEN_v1.2.fasta.gz
 gzip -d CRR591673.fastq.gz
 gzip -d Col-CEN_v1.2.fasta.gz
 ```
