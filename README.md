@@ -2,7 +2,7 @@
 RAGA is a tool designed to improve assembly quality with the assistance of a reference genome.
 
 ## Overview
-The core idea of RAGA is to generate alternative long reads by leveraging the source assembly and PacBio HiFi sequencing reads, with the assistance of a reference genome. Users can follow the guidance provided in the "Usage" section to achieve this goal through our analysis pipeline.
+The core idea of RAGA is to generate alternative long reads by leveraging the target assembly and PacBio HiFi sequencing reads, with the assistance of a reference genome. Users can follow the guidance provided in the "Usage" section to achieve this goal through our analysis pipeline.
 
 ![workflow](https://github.com/wzxie/RAGA/blob/main/workflow.jpg)
 
@@ -92,14 +92,14 @@ RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
 ## Usage
 ### Quick start
 ```
-Usage: RAGA.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+Usage: RAGA.sh [-r reference genome] [-c target PacBio HiFi reads] [options]
 
 Options:
     Input/Output:
     -r          reference genome
-    -c          source PacBio HiFi reads
-    -hic1       source Hi-C_r1 reads
-    -hic2       source Hi-C_r2 reads
+    -c          target PacBio HiFi reads
+    -hic1       target Hi-C_r1 reads
+    -hic2       target Hi-C_r2 reads
 
     Assembly type:
     -homo       assemble inbred/homozygous genomes
@@ -112,8 +112,8 @@ Options:
     Filter:
     -i FLOAT    set the minimum alignment identity [0, 100], default 99
     -l INT      set the minimum alignment length, default 20,000
-    -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    extract the source longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
+    -p FLOAT    extract the target PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+    -P FLOAT    extract the target longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
@@ -133,12 +133,12 @@ Assembly may involve multiple types of reads, multiple reference genomes, closel
 
 A. Homologous species as a reference.
 ```
-Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
+Usage: RAGA-same.sh [-r reference genome] [-q target assembly] [-c target PacBio HiFi reads] [options]
 Options:
     Input/Output:
     -r          reference genome
-    -q          source assembly
-    -c          source PacBio HiFi reads
+    -q          target assembly
+    -c          target PacBio HiFi reads
     -o          output directory
 
     Polish:
@@ -147,8 +147,8 @@ Options:
     Filter:
     -i FLOAT    set the minimum alignment identity [0, 100], default 99
     -l INT      set the minimum alignment length, default 20,000
-    -p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-    -P FLOAT    extract the source longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
+    -p FLOAT    extract the target PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+    -P FLOAT    extract the target longAlt read which aligns length is >= *% of its own length [0-1), default 0.5
 
     Supp:
     -t INT      number of threads, default 1
@@ -159,11 +159,11 @@ See more information at https://github.com/wzxie/RAGA.
 ```
 B. Closely related species as a reference.
 ```
-Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+Usage: RAGA-diff.sh [-r reference genome] [-c target PacBio HiFi reads] [options]
 Options:
     Input/Output:
     -r          reference genome
-    -c          source PacBio HiFi reads
+    -c          target PacBio HiFi reads
     -o          output directory
 
     Polish:
@@ -190,14 +190,14 @@ The reference genome sequence file
 >Chr01
 ATCGATCGATCGATCGATCGATCG...
 ```
-The source assembly sequence file
+The target assembly sequence file
 ```
 >Contig1
 ATCGATCGATCGATCGATCGATCG...
 >Contig2
 ATCGATCGATCGATCGATCGATCG...
 ```
-The source PacBio HiFi sequence file
+The target PacBio HiFi sequence file
 ```
 @*/ccs1
 ATCGATCGATCGATCGATCGATCG...
@@ -217,8 +217,8 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'longAlt_sur_lenDis.svg'             # statistics of the 'longAlt_sur.fa'
 ```
 ## Note
-* RAGA aligns the reference with the source contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input source assembly is of higher quality.
-* In the absence of a high-quality reference for the source species, users can input PacBio HiFi reads from the source species and the reference FASTA file of closely related species directly, eliminating the need for source assembly.
+* RAGA aligns the reference with the target contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input target assembly is of higher quality.
+* In the absence of a high-quality reference for the target species, users can input PacBio HiFi reads from the target species and the reference FASTA file of closely related species directly, eliminating the need for target assembly.
 
 ## Contact
 We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the GitHub page to report issues or email us with any suggestions.
