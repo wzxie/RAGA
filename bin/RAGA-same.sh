@@ -134,13 +134,13 @@ done
 
 # c. Result return
 if [ "$hep" == "help" ]; then
-	echo "Usage: RAGA-same.sh [-r reference genome] [-q source assembly] [-c source PacBio HiFi reads] [options]
+	echo "Usage: RAGA-same.sh [-r reference genome] [-q target assembly] [-c target PacBio HiFi reads] [options]
 
 Options:
 	Input/Output:
 	-r          reference genome
-	-q          source assembly
-	-c          source PacBio HiFi reads
+	-q          target assembly
+	-c          target PacBio HiFi reads
 	-o          output directory
 
 	Polish:
@@ -149,8 +149,8 @@ Options:
 	Filter:
 	-i FLOAT    set the minimum alignment identity [0, 100], default 99
 	-l INT      set the minimum alignment length, default 20,000
-	-p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-	-P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+	-p FLOAT    extract the target PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+	-P FLOAT    extract the target longAlt read which align length is >= *% of its own length [0-1), default 0.5
 
 	Supp:
 	-t INT      number of threads, default 1
@@ -167,8 +167,8 @@ elif [ "$ver" == "version" ]; then
 
 else
 	[[ $ref == "" ]] && echo -e "ERROR: path to reference genome not found, assign using -r." && exit 1
-	[[ $qry == "" ]] && echo -e "ERROR: path to source assembly not found, assign using -q." && exit 1
-	[[ $ccs == "" ]] && echo -e "ERROR: path to source PacBio HiFi reads not found, assign using -c." && exit 1
+	[[ $qry == "" ]] && echo -e "ERROR: path to target assembly not found, assign using -q." && exit 1
+	[[ $ccs == "" ]] && echo -e "ERROR: path to target PacBio HiFi reads not found, assign using -c." && exit 1
 	[[ $npr -lt 3 ]] && echo -e "ERROR: -n INT number of Polishing Rounds [>=3], default 3." && exit 1
 	([[ $dfi -lt 0 ]] || [[ $dfi -gt 100 ]]) && echo -e "ERROR: -i FLOAT	set the minimum alignment identity [0, 100], default 99." && exit 1
 	[[ -d $out ]] && echo -e "ERROR: output directory already exists, please remove or set alternate output." && exit 1
@@ -236,7 +236,7 @@ fi
 
 
 #=====================================================================
-## step2: filter source`s hifi reads, which just used to step3
+## step2: filter target`s hifi reads, which just used to step3
 #=====================================================================
 if [ "$solo" != "yes" ]; then
 	echo -e "Step2: filter the $ccsbase1, which just used to Step3."
@@ -322,7 +322,7 @@ ragtag.py scaffold ${refbase2}_racon${npr}.fa ../$qrybase1 -t $thr -o .
 [[ $? -eq 0 ]] || exit 1
 ln -s ragtag.scaffold.fasta ${qrybase2}_ragtag.fa
 
-# get gap between ref_racon${npr}.fa and sur_ragtag.fa
+# get gap between ref_racon${npr}.fa and tgt_ragtag.fa
 awk '$5=="U"{if($2-1000000>=0){print $1"\t"$2-1000000"\t"$3+1000000} else {print $1"\t0\t"$3+1000000}}' ragtag.scaffold.agp > gap_around.bed
 if [[ $? -eq 0 ]]; then
 	if [ "$solo" != "yes" ]; then
@@ -395,28 +395,28 @@ fi
 
 
 #=====================================================================
-## step6: minimap2 surHiFi reads to ref, and get ccsAlt_sur.fq
+## step6: minimap2 tgtHiFi reads to ref, and get ccsAlt_tgt.fq
 #=====================================================================
 if [ "$solo" != "yes" ]; then
-	echo -e "Step6: minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_sur.fq."
+	echo -e "Step6: minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_tgt.fq."
 else
-	echo -e "2.6 minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_sur.fq."
+	echo -e "2.6 minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_tgt.fq."
 fi
 
 minimap2 -x map-hifi ${refbase2}_racon${npr}.fa ../$ccsbase1 -t $thr > ${refbase2}_racon${npr}To${ccsbase2}.paf
 [[ $? -eq 0 ]] || exit 1
 
-# ccsAlt_sur.fa
-mkdir ccsAlt_sur
+# ccsAlt_tgt.fa
+mkdir ccsAlt_tgt
 declare -i flag=0
 cat ${refbase2}_racon${npr}_gapA.bed | while read id start end
 do
 	flag=$(($flag + 1))
-	echo -e "$id\t$start\t$end" > ccsAlt_sur/gapA_${flag}.bed
-	awk 'ARGIND==1{a[$1];b[$1]=$2;c[$1]=$3} ARGIND==2{if($6 in a && $9>=b[$6] && $8<=c[$6] && $10/$2>="'$per'" && $13~/tp:A:P/){print $1}}' ccsAlt_sur/gapA_${flag}.bed ${refbase2}_racon${npr}To${ccsbase2}.paf | sort | uniq > ccsAlt_sur/gapA_${flag}.id
-	seqkit grep -f ccsAlt_sur/gapA_${flag}.id ../$ccsbase1 -j $thr > ccsAlt_sur/gapA_${flag}.fq
+	echo -e "$id\t$start\t$end" > ccsAlt_tgt/gapA_${flag}.bed
+	awk 'ARGIND==1{a[$1];b[$1]=$2;c[$1]=$3} ARGIND==2{if($6 in a && $9>=b[$6] && $8<=c[$6] && $10/$2>="'$per'" && $13~/tp:A:P/){print $1}}' ccsAlt_tgt/gapA_${flag}.bed ${refbase2}_racon${npr}To${ccsbase2}.paf | sort | uniq > ccsAlt_tgt/gapA_${flag}.id
+	seqkit grep -f ccsAlt_tgt/gapA_${flag}.id ../$ccsbase1 -j $thr > ccsAlt_tgt/gapA_${flag}.fq
 	[[ $? -eq 0 ]] || exit 1
-	rm ccsAlt_sur/gapA_${flag}.bed ccsAlt_sur/gapA_${flag}.id
+	rm ccsAlt_tgt/gapA_${flag}.bed ccsAlt_tgt/gapA_${flag}.id
 done
 
 # $?
@@ -437,9 +437,9 @@ unset flag
 ## step7: partial assembly
 #=====================================================================
 if [ "$solo" != "yes" ]; then
-	echo -e "Step7: partial assembly with ccsAlt_sur.fq and longAlt_ref.fa."
+	echo -e "Step7: partial assembly with ccsAlt_tgt.fq and longAlt_ref.fa."
 else
-	echo -e "2.7 partial assembly with ccsAlt_sur.fq and longAlt_ref.fa."
+	echo -e "2.7 partial assembly with ccsAlt_tgt.fq and longAlt_ref.fa."
 fi
 
 # partial_assembly.fa
@@ -447,19 +447,19 @@ mkdir partial_assembly
 flag=$(wc -l ${refbase2}_racon${npr}_gapA.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_sur/gapA_${i}.fq ]]; then
-		hifiasm --primary -o partial_assembly/gapA_${i} --ul longAlt_ref/gapA_${i}.fa ccsAlt_sur/gapA_${i}.fq -t $thr
+	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_tgt/gapA_${i}.fq ]]; then
+		hifiasm --primary -o partial_assembly/gapA_${i} --ul longAlt_ref/gapA_${i}.fa ccsAlt_tgt/gapA_${i}.fq -t $thr
 
 		if [[ $? -eq 0 ]]; then
-			echo -e "The partial assembly using longAlt_ref/gapA_${i}.fa and ccsAlt_sur/gapA_${i}.fq is done.\n"
+			echo -e "The partial assembly using longAlt_ref/gapA_${i}.fa and ccsAlt_tgt/gapA_${i}.fq is done.\n"
 
 		else
-			echo -e "The partial assembly using longAlt_ref/gapA_${i}.fa and ccsAlt_sur/gapA_${i}.fq is failed.\n"
+			echo -e "The partial assembly using longAlt_ref/gapA_${i}.fa and ccsAlt_tgt/gapA_${i}.fq is failed.\n"
 			exit 1
 		fi
 
 	else
-		echo -e "The longAlt_ref/gapA_${i}.fa or ccsAlt_sur/gapA_${i}.fq is an empty file, skip.\n"
+		echo -e "The longAlt_ref/gapA_${i}.fa or ccsAlt_tgt/gapA_${i}.fq is an empty file, skip.\n"
 	fi
 done
 
@@ -485,49 +485,49 @@ else
 	echo -e "2.8 Get final longAlt reads."
 fi
 
-# longAlt_sur.fa
-mkdir longAlt_sur
+# longAlt_tgt.fa
+mkdir longAlt_tgt
 flag=$(wc -l ${refbase2}_racon${npr}_gapA.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_sur/gapA_${i}.fq ]]; then
-		awk '/^S/{print ">"$2;print $3}' partial_assembly/gapA_${i}.p_ctg.gfa > longAlt_sur/gapA_${i}.p_ctg.fa
-		awk '/^S/{print ">"$2;print $3}' partial_assembly/gapA_${i}.a_ctg.gfa > longAlt_sur/gapA_${i}.a_ctg.fa
-		cat longAlt_sur/gapA_${i}.p_ctg.fa longAlt_sur/gapA_${i}.a_ctg.fa > longAlt_sur/gapA_${i}_pa.fa
-		seqkit seq -n longAlt_sur/gapA_${i}_pa.fa -j $thr > longAlt_sur/gapA_${i}_pa.id
+	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_tgt/gapA_${i}.fq ]]; then
+		awk '/^S/{print ">"$2;print $3}' partial_assembly/gapA_${i}.p_ctg.gfa > longAlt_tgt/gapA_${i}.p_ctg.fa
+		awk '/^S/{print ">"$2;print $3}' partial_assembly/gapA_${i}.a_ctg.gfa > longAlt_tgt/gapA_${i}.a_ctg.fa
+		cat longAlt_tgt/gapA_${i}.p_ctg.fa longAlt_tgt/gapA_${i}.a_ctg.fa > longAlt_tgt/gapA_${i}_pa.fa
+		seqkit seq -n longAlt_tgt/gapA_${i}_pa.fa -j $thr > longAlt_tgt/gapA_${i}_pa.id
 		[[ $? -eq 0 ]] || exit 1
-		rm longAlt_sur/gapA_${i}.p_ctg.fa longAlt_sur/gapA_${i}.a_ctg.fa
+		rm longAlt_tgt/gapA_${i}.p_ctg.fa longAlt_tgt/gapA_${i}.a_ctg.fa
 	fi
 done
 unset flag i
 
-# filter longAlt_sur.fa by reads depth
+# filter longAlt_tgt.fa by reads depth
 flag=$(wc -l ${refbase2}_racon${npr}_gapA.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_sur/gapA_${i}.fq ]]; then
-		minimap2 -ax map-hifi longAlt_sur/gapA_${i}_pa.fa ccsAlt_sur/gapA_${i}.fq -t $thr | samtools view -bS - | samtools sort -o longAlt_sur/gapA_${i}_s.bam -
-		samtools depth -a longAlt_sur/gapA_${i}_s.bam > longAlt_sur/gapA_${i}_dep.txt
-		awk '$3==0' longAlt_sur/gapA_${i}_dep.txt | awk '{print $1}' | sort | uniq > longAlt_sur/gapA_${i}_dep0.id
-		awk 'ARGIND==1{a[$1]} ARGIND==2{if(!($1 in a)){print $1}}' longAlt_sur/gapA_${i}_dep0.id longAlt_sur/gapA_${i}_pa.id > longAlt_sur/gapA_${i}_pa_f1.id
-		seqkit grep -f longAlt_sur/gapA_${i}_pa_f1.id longAlt_sur/gapA_${i}_pa.fa  >> longAlt_sur/gapA_pa_f1_t.fa
+	if [[ -s longAlt_ref/gapA_${i}.fa ]] && [[ -s ccsAlt_tgt/gapA_${i}.fq ]]; then
+		minimap2 -ax map-hifi longAlt_tgt/gapA_${i}_pa.fa ccsAlt_tgt/gapA_${i}.fq -t $thr | samtools view -bS - | samtools sort -o longAlt_tgt/gapA_${i}_s.bam -
+		samtools depth -a longAlt_tgt/gapA_${i}_s.bam > longAlt_tgt/gapA_${i}_dep.txt
+		awk '$3==0' longAlt_tgt/gapA_${i}_dep.txt | awk '{print $1}' | sort | uniq > longAlt_tgt/gapA_${i}_dep0.id
+		awk 'ARGIND==1{a[$1]} ARGIND==2{if(!($1 in a)){print $1}}' longAlt_tgt/gapA_${i}_dep0.id longAlt_tgt/gapA_${i}_pa.id > longAlt_tgt/gapA_${i}_pa_f1.id
+		seqkit grep -f longAlt_tgt/gapA_${i}_pa_f1.id longAlt_tgt/gapA_${i}_pa.fa >> longAlt_tgt/gapA_pa_f1_t.fa
 		[[ $? -eq 0 ]] || exit 1
 	fi
 done
-seqkit rename longAlt_sur/gapA_pa_f1_t.fa  > longAlt_sur/gapA_pa_f1.fa
-rm longAlt_sur/gapA_pa_f1_t.fa
+seqkit rename longAlt_tgt/gapA_pa_f1_t.fa > longAlt_tgt/gapA_pa_f1.fa
+rm longAlt_tgt/gapA_pa_f1_t.fa
 unset flag i
 
-# filter longAlt_sur.fa by reads coverage
-minimap2 -x asm5 ../$qrybase1 longAlt_sur/gapA_pa_f1.fa -t $thr > longAlt_sur/${qrybase2}TogapA_pa_f1.paf
-awk '$10/$2>="'$PER'" && $10/$2<1{print $1}' longAlt_sur/${qrybase2}TogapA_pa_f1.paf | sort | uniq > longAlt_sur/gapA_pa_f.id
-seqkit grep -f longAlt_sur/gapA_pa_f.id longAlt_sur/gapA_pa_f1.fa  > longAlt_sur/gapA_pa_f2.fa
+# filter longAlt_tgt.fa by reads coverage
+minimap2 -x asm5 ../$qrybase1 longAlt_tgt/gapA_pa_f1.fa -t $thr > longAlt_tgt/${qrybase2}TogapA_pa_f1.paf
+awk '$10/$2>="'$PER'" && $10/$2<1{print $1}' longAlt_tgt/${qrybase2}TogapA_pa_f1.paf | sort | uniq > longAlt_tgt/gapA_pa_f.id
+seqkit grep -f longAlt_tgt/gapA_pa_f.id longAlt_tgt/gapA_pa_f1.fa > longAlt_tgt/gapA_pa_f2.fa
 [[ $? -eq 0 ]] || exit 1
 
-# filter longAlt_sur.fa by reads length
-seqkit seq -m $dfl -j $thr longAlt_sur/gapA_pa_f2.fa | seqkit fx2tab -l -j $thr | awk '{print ">longAlt_"NR; print $2}' > longAlt_sur/gapA_pa_f3.fa
+# filter longAlt_tgt.fa by reads length
+seqkit seq -m $dfl -j $thr longAlt_tgt/gapA_pa_f2.fa | seqkit fx2tab -l -j $thr | awk '{print ">longAlt_"NR; print $2}' > longAlt_tgt/gapA_pa_f3.fa
 [[ $? -eq 0 ]] || exit 1
-ln -s longAlt_sur/gapA_pa_f3.fa longAlt_sur.fa
+ln -s longAlt_tgt/gapA_pa_f3.fa longAlt_tgt.fa
 
 # $?
 if [[ $? -eq 0 ]]; then
@@ -550,12 +550,12 @@ else
 	echo -e "2.9 Visualization of result statistics."
 fi
 
-pl_lenDis.pl -f longAlt_sur.fa -split-length $dfl -o longAlt_sur_lenDis.svg
+pl_lenDis.pl -f longAlt_tgt.fa -split-length $dfl -o longAlt_tgt_lenDis.svg
 
 if [[ $? -eq 0 ]]; then
-	echo -e "The longAlt_sur_lenDis.svg is done."
+	echo -e "The longAlt_tgt_lenDis.svg is done."
 else
-	echo -e "The longAlt_sur_lenDis.svg is failed."
+	echo -e "The longAlt_tgt_lenDis.svg is failed."
 #	exit 1
 fi
 
