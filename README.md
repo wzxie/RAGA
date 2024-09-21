@@ -211,10 +211,10 @@ ATCGATCGATCGATCGATCGATCG...
 ### Output files
 ```
 * Initial_assembly/initial.fa              # de novo assembly
-* Alternative_reads/longAlt_sur.fa         # Alternative long reads by RAGA
+* Alternative_reads/longAlt_tgt.fa         # Alternative long reads by RAGA
 * Optimized_assembly/optimized.fa          # Optimized assembly
 * The 'gapA_area.svg'                      # Visualization of GAP area
-* The 'longAlt_sur_lenDis.svg'             # statistics of the 'longAlt_sur.fa'
+* The 'longAlt_tgt_lenDis.svg'             # statistics of the 'longAlt_tgt.fa'
 ```
 ## Note
 * RAGA aligns the reference with the target contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input target assembly is of higher quality.
