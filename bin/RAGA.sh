@@ -383,7 +383,7 @@ if [ "$haplotype" == "haplotype" ]; then
 	fi
 fi
 
-# 3.2 assembly with HiFi / Hi-C and longAlt_sur.fa
+# 3.2 assembly with HiFi / Hi-C and longAlt_tgt.fa
 mkdir Optimized_assembly && cd Optimized_assembly
 if [ "$homo" == "homo" ]; then
 	# a. Assemble inbred/homozygous genomes
