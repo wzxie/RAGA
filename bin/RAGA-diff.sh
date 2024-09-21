@@ -103,12 +103,12 @@ done
 
 # c. Result return
 if [ "$hep" == "help" ]; then
-	echo "Usage: RAGA-diff.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+	echo "Usage: RAGA-diff.sh [-r reference genome] [-c target PacBio HiFi reads] [options]
 
 Options:
 	Input/Output:
 	-r          reference genome
-	-c          source PacBio HiFi reads
+	-c          target PacBio HiFi reads
 	-o          output directory
 
 	Polish:
@@ -132,7 +132,7 @@ elif [ "$ver" == "version" ]; then
 
 else
 	[[ $ref == "" ]] && echo -e "ERROR: path to reference genome not found, assign using -r." && exit 1
-	[[ $ccs == "" ]] && echo -e "ERROR: path to source PacBio HiFi reads not found, assign using -c." && exit 1
+	[[ $ccs == "" ]] && echo -e "ERROR: path to target PacBio HiFi reads not found, assign using -c." && exit 1
 	[[ $npr -lt 10 ]] && echo -e "ERROR: number of Polishing Rounds [>=10], default 10." && exit 1
 	[[ -d $out ]] && echo -e "ERROR: output directory already exists, please remove or set alternate output." && exit 1
 	[[ -d $out ]] || mkdir $out
@@ -239,7 +239,7 @@ unset i flag
 
 
 #=====================================================================
-## step3: minimap2 surHiFi reads to ref, and get longAlt_ref.fa
+## step3: minimap2 tgtHiFi reads to ref, and get longAlt_ref.fa
 #=====================================================================
 if [ "$solo" != "yes" ]; then
 	echo -e "Step3: minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get longAlt_ref.fa."
@@ -276,24 +276,24 @@ unset flag
 
 
 #=====================================================================
-## step4: minimap2 surHiFi reads to ref, and get ccsAlt_sur.fq
+## step4: minimap2 tgtHiFi reads to ref, and get ccsAlt_tgt.fq
 #=====================================================================
 if [ "$solo" != "yes" ]; then
-	echo -e "Step4: minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_sur.fq."
+	echo -e "Step4: minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_tgt.fq."
 else
-	echo -e "2.4 minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_sur.fq."
+	echo -e "2.4 minimap2 $ccsbase1 to ${refbase2}_racon${npr}.fa, then get ccsAlt_tgt.fq."
 fi
 
-mkdir ccsAlt_sur
+mkdir ccsAlt_tgt
 declare -i flag=0
 cat ${refbase2}_racon${npr}To${ccsbase2}_m.bed | while read id start end
 do
 	flag=$(($flag + 1))
-	echo -e "$id\t$start\t$end" > ccsAlt_sur/block_${flag}.bed
-	awk 'ARGIND==1{a[$1];b[$1]=$2;c[$1]=$3} ARGIND==2{if($6 in a && $9>=b[$6] && $8<=c[$6] && $10/$2>=0.9 && $13~/tp:A:P/){print $1}}' ccsAlt_sur/block_${flag}.bed ${refbase2}_racon${npr}To${ccsbase2}.paf | sort | uniq > ccsAlt_sur/block_${flag}.id
-	seqkit grep -f ccsAlt_sur/block_${flag}.id ../$ccsbase1 -j $thr > ccsAlt_sur/block_${flag}.fq
+	echo -e "$id\t$start\t$end" > ccsAlt_tgt/block_${flag}.bed
+	awk 'ARGIND==1{a[$1];b[$1]=$2;c[$1]=$3} ARGIND==2{if($6 in a && $9>=b[$6] && $8<=c[$6] && $10/$2>=0.9 && $13~/tp:A:P/){print $1}}' ccsAlt_tgt/block_${flag}.bed ${refbase2}_racon${npr}To${ccsbase2}.paf | sort | uniq > ccsAlt_tgt/block_${flag}.id
+	seqkit grep -f ccsAlt_tgt/block_${flag}.id ../$ccsbase1 -j $thr > ccsAlt_tgt/block_${flag}.fq
 	[[ $? -eq 0 ]] || exit 1
-	rm ccsAlt_sur/block_${flag}.bed ccsAlt_sur/block_${flag}.id
+	rm ccsAlt_tgt/block_${flag}.bed ccsAlt_tgt/block_${flag}.id
 done
 
 if [[ $? -eq 0 ]]; then
@@ -312,25 +312,25 @@ unset flag
 ## step5: partial assembly
 #=====================================================================
 if [ "$solo" != "yes" ]; then
-	echo -e "Step5: partial assembly with ccsAlt_sur.fq and longAlt_ref.fa."
+	echo -e "Step5: partial assembly with ccsAlt_tgt.fq and longAlt_ref.fa."
 else
-	echo -e "2.5 partial assembly with ccsAlt_sur.fq and longAlt_ref.fa."
+	echo -e "2.5 partial assembly with ccsAlt_tgt.fq and longAlt_ref.fa."
 fi
 
 mkdir partial_assembly
 flag=$(wc -l ${refbase2}_racon${npr}To${ccsbase2}_m.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_sur/block_${i}.fq ]]; then
-		hifiasm --primary -o partial_assembly/block_${i} --ul longAlt_ref/block_${i}.fa ccsAlt_sur/block_${i}.fq -t $thr
+	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_tgt/block_${i}.fq ]]; then
+		hifiasm --primary -o partial_assembly/block_${i} --ul longAlt_ref/block_${i}.fa ccsAlt_tgt/block_${i}.fq -t $thr
 		if [[ $? -eq 0 ]]; then
-			echo -e "The partial assembly using longAlt_ref/block_${i}.fa and ccsAlt_sur/block_${i}.fq is done.\n"
+			echo -e "The partial assembly using longAlt_ref/block_${i}.fa and ccsAlt_tgt/block_${i}.fq is done.\n"
 		else
-			echo -e "The partial assembly using longAlt_ref/block_${i}.fa and ccsAlt_sur/block_${i}.fq is failed.\n"
+			echo -e "The partial assembly using longAlt_ref/block_${i}.fa and ccsAlt_tgt/block_${i}.fq is failed.\n"
 			exit 1
 		fi
 	else
-		echo -e "The longAlt_ref/block_${i}.fa or ccsAlt_sur/block_${i}.fq is an empty file, skip.\n"
+		echo -e "The longAlt_ref/block_${i}.fa or ccsAlt_tgt/block_${i}.fq is an empty file, skip.\n"
 	fi
 done
 
@@ -356,41 +356,41 @@ else
 fi
 
 # get each block_${i}_pa.fa
-mkdir longAlt_sur
+mkdir longAlt_tgt
 flag=$(wc -l ${refbase2}_racon${npr}To${ccsbase2}_m.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_sur/block_${i}.fq ]]; then
-		awk '/^S/{print ">"$2;print $3}' partial_assembly/block_${i}.p_ctg.gfa > longAlt_sur/block_${i}.p_ctg.fa
-		awk '/^S/{print ">"$2;print $3}' partial_assembly/block_${i}.a_ctg.gfa > longAlt_sur/block_${i}.a_ctg.fa
-		cat longAlt_sur/block_${i}.p_ctg.fa longAlt_sur/block_${i}.a_ctg.fa > longAlt_sur/block_${i}_pa.fa
-		seqkit seq -n longAlt_sur/block_${i}_pa.fa -j $thr > longAlt_sur/block_${i}_pa.id
+	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_tgt/block_${i}.fq ]]; then
+		awk '/^S/{print ">"$2;print $3}' partial_assembly/block_${i}.p_ctg.gfa > longAlt_tgt/block_${i}.p_ctg.fa
+		awk '/^S/{print ">"$2;print $3}' partial_assembly/block_${i}.a_ctg.gfa > longAlt_tgt/block_${i}.a_ctg.fa
+		cat longAlt_tgt/block_${i}.p_ctg.fa longAlt_tgt/block_${i}.a_ctg.fa > longAlt_tgt/block_${i}_pa.fa
+		seqkit seq -n longAlt_tgt/block_${i}_pa.fa -j $thr > longAlt_tgt/block_${i}_pa.id
 		[[ $? -eq 0 ]] || exit 1
-		rm longAlt_sur/block_${i}.p_ctg.fa longAlt_sur/block_${i}.a_ctg.fa
+		rm longAlt_tgt/block_${i}.p_ctg.fa longAlt_tgt/block_${i}.a_ctg.fa
 	fi
 done
 unset flag i
 
-# filter longAlt_sur.fa by reads depth
+# filter longAlt_tgt.fa by reads depth
 flag=$(wc -l ${refbase2}_racon${npr}To${ccsbase2}_m.bed | awk '{print $1}')
 for i in $(seq 1 $flag)
 do
-	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_sur/block_${i}.fq ]]; then
-		minimap2 -ax map-hifi longAlt_sur/block_${i}_pa.fa ccsAlt_sur/block_${i}.fq -t $thr | samtools view -bS - | samtools sort -o longAlt_sur/block_${i}_s.bam -
-		samtools depth -a longAlt_sur/block_${i}_s.bam > longAlt_sur/block_${i}_dep.txt
-		awk '$3==0' longAlt_sur/block_${i}_dep.txt | awk '{print $1}' | sort | uniq > longAlt_sur/block_${i}_dep0.id
-		awk 'ARGIND==1{a[$1]} ARGIND==2{if(!($1 in a)){print $1}}' longAlt_sur/block_${i}_dep0.id longAlt_sur/block_${i}_pa.id > longAlt_sur/block_${i}_pa_f1.id
-		seqkit grep -f longAlt_sur/block_${i}_pa_f1.id longAlt_sur/block_${i}_pa.fa >> longAlt_sur/block_pa_f1.fa
+	if [[ -s longAlt_ref/block_${i}.fa ]] && [[ -s ccsAlt_tgt/block_${i}.fq ]]; then
+		minimap2 -ax map-hifi longAlt_tgt/block_${i}_pa.fa ccsAlt_tgt/block_${i}.fq -t $thr | samtools view -bS - | samtools sort -o longAlt_tgt/block_${i}_s.bam -
+		samtools depth -a longAlt_tgt/block_${i}_s.bam > longAlt_tgt/block_${i}_dep.txt
+		awk '$3==0' longAlt_tgt/block_${i}_dep.txt | awk '{print $1}' | sort | uniq > longAlt_tgt/block_${i}_dep0.id
+		awk 'ARGIND==1{a[$1]} ARGIND==2{if(!($1 in a)){print $1}}' longAlt_tgt/block_${i}_dep0.id longAlt_tgt/block_${i}_pa.id > longAlt_tgt/block_${i}_pa_f1.id
+		seqkit grep -f longAlt_tgt/block_${i}_pa_f1.id longAlt_tgt/block_${i}_pa.fa >> longAlt_tgt/block_pa_f1.fa
 		[[ $? -eq 0 ]] || exit 1
 	fi
 done
 unset flag i
 
-# filter longAlt_sur.fa by reads length
-seqkit seq -m $dfl longAlt_sur/block_pa_f1.fa | seqkit fx2tab -l -j $thr | awk '{print ">longAlt_"NR; print $2}' > longAlt_sur/block_pa_f2.fa
+# filter longAlt_tgt.fa by reads length
+seqkit seq -m $dfl longAlt_tgt/block_pa_f1.fa | seqkit fx2tab -l -j $thr | awk '{print ">longAlt_"NR; print $2}' > longAlt_tgt/block_pa_f2.fa
 [[ $? -eq 0 ]] || exit 1
 
-ln -s longAlt_sur/block_pa_f2.fa longAlt_sur.fa
+ln -s longAlt_tgt/block_pa_f2.fa longAlt_tgt.fa
 
 if [[ $? -eq 0 ]]; then
 	if [ "$solo" != "yes" ]; then
@@ -412,12 +412,12 @@ else
 	echo -e "2.7 Visualization of result statistics."
 fi
 
-pl_lenDis.pl -f longAlt_sur.fa -split-length $dfl -o longAlt_sur_lenDis.svg
+pl_lenDis.pl -f longAlt_tgt.fa -split-length $dfl -o longAlt_tgt_lenDis.svg
 
 if [[ $? -eq 0 ]]; then
-	echo -e "The longAlt_sur_lenDis.svg is done!"
+	echo -e "The longAlt_tgt_lenDis.svg is done!"
 else
-	echo -e "The longAlt_sur_lenDis.svg is failed."
+	echo -e "The longAlt_tgt_lenDis.svg is failed."
 #	exit 1
 fi
 
