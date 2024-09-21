@@ -156,14 +156,14 @@ done
 
 # c. Result return
 if [ "$hep" == "help" ]; then
-	echo "Usage: RAGA.sh [-r reference genome] [-c source PacBio HiFi reads] [options]
+	echo "Usage: RAGA.sh [-r reference genome] [-c target PacBio HiFi reads] [options]
 
 Options:
 	Input/Output:
 	-r          reference genome
-	-c          source PacBio HiFi reads
-	-hic1       source Hi-C_r1 reads
-	-hic2       source Hi-C_r2 reads
+	-c          target PacBio HiFi reads
+	-hic1       target Hi-C_r1 reads
+	-hic2       target Hi-C_r2 reads
 
 	Assembly type:
 	-homo       assemble inbred/homozygous genomes
@@ -176,8 +176,8 @@ Options:
 	Filter:
 	-i FLOAT    set the minimum alignment identity [0, 100], default 99
 	-l INT      set the minimum alignment length, default 20,000
-	-p FLOAT    extract the source PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
-	-P FLOAT    extract the source longAlt read which align length is >= *% of its own length [0-1), default 0.5
+	-p FLOAT    extract the target PacBio HiFi read which align length is >= *% of its own length [0-1], default 0.9
+	-P FLOAT    extract the target longAlt read which align length is >= *% of its own length [0-1), default 0.5
 
 	Supp:
 	-t INT      number of threads, default 1
@@ -194,7 +194,7 @@ elif [ "$ver" == "version" ]; then
 
 else
 	[[ $ref == "" ]] && echo -e "ERROR: path to reference genome not found, assign using -r." && exit 1
-	[[ $ccs == "" ]] && echo -e "ERROR: path to source PacBio HiFi reads not found, assign using -c." && exit 1
+	[[ $ccs == "" ]] && echo -e "ERROR: path to target PacBio HiFi reads not found, assign using -c." && exit 1
 	[[ $npr -lt 3 ]] && echo -e "ERROR: -n INT number of Polishing Rounds [>=3], default 3." && exit 1
 	([[ $dfi -lt 0 ]] || [[ $dfi -gt 100 ]]) && echo -e "ERROR: -i FLOAT	set the minimum alignment identity [0, 100], default 99." && exit 1
 fi
@@ -388,7 +388,7 @@ mkdir Optimized_assembly && cd Optimized_assembly
 if [ "$homo" == "homo" ]; then
 	# a. Assemble inbred/homozygous genomes
 	echo -e "Step3: Optimized Assembly (assemble inbred/homozygous genome)."
-	hifiasm -o contigs --ul ../Alternative_reads/longAlt_sur.fa ../$ccsbase1 -t $thr
+	hifiasm -o contigs --ul ../Alternative_reads/longAlt_tgt.fa ../$ccsbase1 -t $thr
 	[[ $? -eq 0 ]] || exit 1
 	awk '/^S/{print ">"$2;print $3}' contigs.bp.p_ctg.gfa > contigs.bp.p_ctg.fa
 	ln -s contigs.bp.p_ctg.fa optimized.fa
@@ -397,7 +397,7 @@ if [ "$homo" == "homo" ]; then
 elif [ "$hetero" == "hetero" ]; then
 	# b. Assemble heterozygous genomes
 	echo -e "Step3: Optimized Assembly (assemble heterozygous genome)."
-	hifiasm -o contigs --ul ../Alternative_reads/longAlt_sur.fa ../$ccsbase1 -t $thr
+	hifiasm -o contigs --ul ../Alternative_reads/longAlt_tgt.fa ../$ccsbase1 -t $thr
 	[[ $? -eq 0 ]] || exit 1
 	awk '/^S/{print ">"$2;print $3}' contigs.bp.p_ctg.gfa > contigs.bp.p_ctg.fa
 	ln -s contigs.bp.p_ctg.fa optimized.fa
@@ -406,7 +406,7 @@ elif [ "$hetero" == "hetero" ]; then
 elif [ "$haplotype" == "haplotype" ]; then
 	# c. Generate a pair of haplotype-resolved assemblies with paired-end Hi-C reads
 	echo -e "Step3: Optimized Assembly (assemble haplotype-resolved genome with Hi-C reads)."
-	hifiasm -o contigs --h1 ../$hic1base1 --h2 ../$hic2base1 --ul ../Alternative_reads/longAlt_sur.fa ../$ccsbase1 -t $thr
+	hifiasm -o contigs --h1 ../$hic1base1 --h2 ../$hic2base1 --ul ../Alternative_reads/longAlt_tgt.fa ../$ccsbase1 -t $thr
 	[[ $? -eq 0 ]] || exit 1
 	awk '/^S/{print ">"$2;print $3}' contigs.hic.hap1.p_ctg.gfa > contigs.hic.hap1.p_ctg.fa
 	awk '/^S/{print ">"$2;print $3}' contigs.hic.hap2.p_ctg.gfa > contigs.hic.hap2.p_ctg.fa
@@ -425,7 +425,7 @@ elif [ "$haplotype" == "haplotype" ]; then
 else
 	# e. default assembly
 	echo -e "Step3: Optimized Assembly (the default assembly mode 'homo' is used)."
-	hifiasm -o contigs --ul ../Alternative_reads/longAlt_sur.fa ../$ccsbase1 -t $thr
+	hifiasm -o contigs --ul ../Alternative_reads/longAlt_tgt.fa ../$ccsbase1 -t $thr
 	[[ $? -eq 0 ]] || exit 1
 	awk '/^S/{print ">"$2;print $3}' contigs.bp.p_ctg.gfa > contigs.bp.p_ctg.fa
 	ln -s contigs.bp.p_ctg.fa optimized.fa
