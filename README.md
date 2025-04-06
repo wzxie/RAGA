@@ -1,5 +1,5 @@
 # RAGA
-RAGA: a reference assistant genome assembly tool for efficient population-scale assembly.
+RAGA: a reference assistant genome assembly tool for efficient population-scale assembly.  
 Ru-Peng Zhao1,#, Yu-Hong Luo1,#, Wen-Zhao Xie3,#, Zu-Wen Zhou1, Yong-Qing Qian2, Si-Long Yuan1, Dong-Ao Li1, Jiana Li2, Kun Lu2, Xingtan Zhang4, Jia-Ming Song2,* and Ling-Ling Chen1*
 
 ## Overview
