@@ -1,5 +1,6 @@
 # RAGA
-RAGA is a tool designed to improve assembly quality with the assistance of a reference genome.
+RAGA: a reference assistant genome assembly tool for efficient population-scale assembly.
+Ru-Peng Zhao1,#, Yu-Hong Luo1,#, Wen-Zhao Xie3,#, Zu-Wen Zhou1, Yong-Qing Qian2, Si-Long Yuan1, Dong-Ao Li1, Jiana Li2, Kun Lu2, Xingtan Zhang4, Jia-Ming Song2,* and Ling-Ling Chen1*
 
 ## Overview
 The core idea of RAGA is to generate alternative long reads by leveraging the target assembly and PacBio HiFi sequencing reads, with the assistance of a reference genome. Users can follow the guidance provided in the "Usage" section to achieve this goal through our analysis pipeline.
