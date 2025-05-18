@@ -30,10 +30,11 @@ Run the following command to install RAGA and its dependencies.
 3. export PATH=/path/to/RAGA/bin/:$PATH
 
 (2) Download dependencies
-a. install with conda
-conda create -y -n RAGA
-conda activate RAGA
-conda install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam -y
+a. install with mamda
+mamda create -y -n RAGA
+mamda activate RAGA
+mamda install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam bwa spades.py -y
+wget https://github.com/broadinstitute/pilon/releases/download/v1.24/pilon-1.24.jar
 git clone https://github.com/malonge/RagTag.git
 cd RagTag
 chmod +x *
@@ -79,6 +80,8 @@ make
 # seqkit
 wget https://github.com/shenwei356/seqkit/releases/download/v2.8.0/seqkit_linux_arm64.tar.gz
 tar -zxvf *.tar.gz
+# pilon-1.24.jar
+wget https://github.com/broadinstitute/pilon/releases/download/v1.24/pilon-1.24.jar
 # Add all the software to the PATH.
 ```
 ## Example
