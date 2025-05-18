@@ -217,11 +217,11 @@ ATCGATCGATCGATCGATCGATCG...
 ```
 ### Output files
 ```
-* Initial_assembly/initial.fa              # de novo assembly
-* Alternative_reads/longAlt_tgt.fa         # Alternative long reads by RAGA
-* Optimized_assembly/optimized.fa          # Optimized assembly
-* The 'gapA_area.svg'                      # Visualization of GAP area
-* The 'longAlt_tgt_lenDis.svg'             # statistics of the 'longAlt_tgt.fa'
+* Initial_assembly/initial.fa        # de novo assembly
+* Alternative_reads/longAlt_tgt.fa   # Alternative long reads by RAGA
+* Optimized_assembly/optimized.fa    # Optimized assembly
+* The 'gapA_area.svg'                # Visualization of GAP area
+* The 'longAlt_tgt_lenDis.svg'       # statistics of the 'longAlt_tgt.fa'
 ```
 
 ## NGS testing
@@ -239,7 +239,7 @@ RAGA-ngs.sh -r GCA_949124345.1.fa -read1 read1.fq -read2 read2.fq -t 8 &> RAGA-n
 
 ### Output files
 ```
-* longAlt_ngs/longAlt_ngs.fa               # Alternative long reads by RAGA-ngs
+* longAlt_ngs/longAlt_ngs.fa         # Alternative long reads by RAGA-ngs
 ```
 
 ## Note
