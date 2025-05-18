@@ -17,6 +17,9 @@ The core idea of RAGA is to generate alternative long reads by leveraging the ta
 7. samtools (Version: 1.11)
 8. bedtools (v2.26.0)
 9. seqkit (Version: 2.5.1)
+10. BWA (0.7.17-r1188)
+11. pilon-1.24.jar (version 1.24)
+12. spades.py (v4.2.0)
 
 ## Installation
 Run the following command to install RAGA and its dependencies.
