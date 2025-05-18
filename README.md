@@ -224,17 +224,17 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'longAlt_tgt_lenDis.svg'             # statistics of the 'longAlt_tgt.fa'
 ```
 
-## Example
+## NGS testing
 ### 1. Download example data
 ```
-wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
-wget https://cbi.gxu.edu.cn/downloadFiles/rpzhao/RAGA-test/Col-CEN_v1.2.fasta.gz
-gzip -d CRR591673.fastq.gz
-gzip -d Col-CEN_v1.2.fasta.gz
+wget
+wget
+wget 
 ```
-### 2. Run RAGA
+
+### 2. Run RAGA-ngs.sh
 ```
-RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
+RAGA-ngs.sh -r GCA_949124345.1.fa -read1 read1.fq -read2 read2.fq -t 8 &> RAGA-ngs.log
 ```
 
 ## Note
@@ -245,6 +245,6 @@ RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
 We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the GitHub page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
 * Luo yuhong:     luoyuhong0720@163.com
-* Xie wenzhao:    xwz080311@163.com
+* Xie wenzhao:    wzxie@hebtu.edu.cn
 * Song jiaming:   jmsong@swu.edu.cn
 * Chen lingling:  llchen@gxu.edu.cn
