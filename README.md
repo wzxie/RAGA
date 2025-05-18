@@ -237,6 +237,11 @@ wget
 RAGA-ngs.sh -r GCA_949124345.1.fa -read1 read1.fq -read2 read2.fq -t 8 &> RAGA-ngs.log
 ```
 
+### Output files
+```
+* longAlt_ngs/longAlt_ngs.fa               # Alternative long reads by RAGA-ngs
+```
+
 ## Note
 * RAGA aligns the reference with the target contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input target assembly is of higher quality.
 * In the absence of a high-quality reference for the target species, users can input PacBio HiFi reads from the target species and the reference FASTA file of closely related species directly, eliminating the need for target assembly.
