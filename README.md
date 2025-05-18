@@ -223,6 +223,20 @@ ATCGATCGATCGATCGATCGATCG...
 * The 'gapA_area.svg'                      # Visualization of GAP area
 * The 'longAlt_tgt_lenDis.svg'             # statistics of the 'longAlt_tgt.fa'
 ```
+
+## Example
+### 1. Download example data
+```
+wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
+wget https://cbi.gxu.edu.cn/downloadFiles/rpzhao/RAGA-test/Col-CEN_v1.2.fasta.gz
+gzip -d CRR591673.fastq.gz
+gzip -d Col-CEN_v1.2.fasta.gz
+```
+### 2. Run RAGA
+```
+RAGA.sh -r Col-CEN_v1.2.fasta -c CRR591673.fastq -t 8 &> RAGA.log
+```
+
 ## Note
 * RAGA aligns the reference with the target contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input target assembly is of higher quality.
 * In the absence of a high-quality reference for the target species, users can input PacBio HiFi reads from the target species and the reference FASTA file of closely related species directly, eliminating the need for target assembly.
