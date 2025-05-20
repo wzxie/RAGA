@@ -227,9 +227,7 @@ ATCGATCGATCGATCGATCGATCG...
 ## NGS testing
 ### 1. Download example data
 ```
-wget
-wget
-wget 
+wge thttps://cbi.gxu.edu.cn/downloadFiles/rpzhao/RAGA-test/NGS-test.zip
 ```
 
 ### 2. Run RAGA-ngs.sh
