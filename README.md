@@ -244,6 +244,9 @@ RAGA-ngs.sh -r GCA_949124345.1.fa -read1 read1.fq -read2 read2.fq -t 8 &> RAGA-n
 * RAGA aligns the reference with the target contigs to identify alignment blocks near the gaps when the input is the reference of the homologous species. Hence, RAGA's output will be more reliable if the input target assembly is of higher quality.
 * In the absence of a high-quality reference for the target species, users can input PacBio HiFi reads from the target species and the reference FASTA file of closely related species directly, eliminating the need for target assembly.
 
+## Citing RAGA
+Ru-Peng Zhao, Yu-Hong Luo, Wen-Zhao Xie, Zu-Wen Zhou, Yong-Qing Qian, Si-Long Yuan, Dong-Ao Li, Jiana Li, Kun Lu, Xingtan Zhang, Jia-Ming Song, Ling-Ling Chen, RAGA: a reference-assisted genome assembly tool for efficient population-scale assembly, Horticulture Research, 2025;, uhaf207, https://doi.org/10.1093/hr/uhaf207
+
 ## Contact
 We hope this tools could be helpful for the groups which focused on plants genome assembly, you can use the GitHub page to report issues or email us with any suggestions.
 * Zhao rupeng:    2247290650@qq.com
