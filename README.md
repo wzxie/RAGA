@@ -1,5 +1,3 @@
-# RAGA
-
 ## Overview
 The core idea of RAGA is to generate alternative long reads by leveraging the target assembly and PacBio HiFi sequencing reads, with the assistance of a reference genome. Users can follow the guidance provided in the "Usage" section to achieve this goal through our analysis pipeline.
 
