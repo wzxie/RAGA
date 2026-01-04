@@ -29,7 +29,7 @@ Run the following command to install RAGA and its dependencies.
 a. install with mamda
 mamba create -y -n RAGA
 mamba activate RAGA
-mamba install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam bwa spades -y
+mamba install bioconda::minimap2 racon mummer4 hifiasm samtools bedtools seqkit pysam bwa spades perl-svg -y
 wget https://github.com/broadinstitute/pilon/releases/download/v1.24/pilon-1.24.jar
 git clone https://github.com/malonge/RagTag.git
 cd RagTag
