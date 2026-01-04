@@ -83,7 +83,7 @@ wget https://github.com/broadinstitute/pilon/releases/download/v1.24/pilon-1.24.
 ## Example
 ### 1. Download example data
 ```
-wget https://cncb-gsa.obs.cn-north-4.myhuaweicloud.com/data/gsapub/CRA008584/CRR591673/CRR591673.fastq.gz
+wget https://download.cncb.ac.cn/gsa2/CRA008584/CRR591673/CRR591673.fastq.gz
 wget https://cbi.gxu.edu.cn/downloadFiles/rpzhao/RAGA-test/Col-CEN_v1.2.fasta.gz
 gzip -d CRR591673.fastq.gz
 gzip -d Col-CEN_v1.2.fasta.gz
